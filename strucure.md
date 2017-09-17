@@ -1,7 +1,64 @@
-# Python in Space - The N Body Problem
+# Python in Space - The N-Body Problem
 
-- The history of trying to predict the motion of moon, sun and the visible stars
-- The N Body Problem
+- The history of Celestial Mechanics
+	- The name celestial mechanics:
+		- "Modern analytic celestial mechanics started with Isaac Newton's Principia of 1687. The name "celestial mechanics" is more recent than that. Newton wrote that the field should be called "rational mechanics." The term "dynamics" came in a little later with Gottfried Leibniz, and over a century after Newton, Pierre-Simon Laplace introduced the term "celestial mechanics." Prior to Kepler there was little connection between exact, quantitative prediction of planetary positions, using geometrical or arithmetical techniques, and contemporary discussions of the physical causes of the planets' motion."
+	- Important
+		- Johannes Kepler
+		- Isaac Newton
+		- 	Joseph-Louis Lagrange
+		- 	Simon Newcomb
+		- 	Albert Einstein
+	- Antiquity
+		- Aristarchus of Samos (c. 310 BC - c. 230 BC)
+			- First Heliocentric model, but text has been lost
+			- Explanation of missing stellar parallax
+		- Claudius Ptolemaeus (c. AD 100 – c. 170)
+			- Geocentric model
+			- the spherical Earth lying motionless as the center
+			- "fixed stars"
+			- various planets revolving around the Earth.
+				- The celestial realm is spherical, and moves as a sphere.
+			- The Earth is a sphere.
+			- The Earth is at the center of the cosmos.
+			- The Earth, in relation to the distance of the fixed stars, has no appreciable size and must be treated as a mathematical point.
+			- The Earth does not move.
+	- Middle Ages
+		- Mo'ayyeduddin al-Urdi, Nasir al-Din al-Tusi, and Ibn al-Shatir
+		- Nicolaus Copernicus (1473-1553) 
+			- De revolutionibus orbium coelestium (1543)
+			- heliocentric model
+			- Sun in the middle
+			- planets move in circular paths around it
+			- launching point for modern astronomy
+	- Copernican Revolution
+		- "From publication until about 1700, few astronomers were convinced by the Copernican system, though the book was relatively widely circulated (around 500 copies of the first and second editions have survived,[34] which is a large number by the scientific standards of the time)."
+		- Few people at the time were ready to concede that the earth moved around the sun at the time
+		- Advantages of the copernican model
+			- accurately predicts the relative distances of the planets from the Sun
+			- account of the cause of the seasons: that the Earth's axis is not perpendicular to the plane of its orbit
+			-  explanation for the apparent retrograde motions of the planets—"namely as parallactic displacements resulting from the Earth's motion around the Sun"
+		-  Disadvantages
+			-  contrary to common sense 
+			-  contradicts the Bible
+			-  Aristotelian Physics (as opposed to Newtonian Physics) did not have an explanation of why bodies would move on their own, but postulated that heavenly bodies, being made of "aether" just have movement as a property
+			-  Stars would have to be HUGE
+			-  Tycho Brahe: The Copernican system "...“... expertly and completely circumvents all that is superfluous or discordant in the system of Ptolemy. On no point does it offend the principle of mathematics. Yet it ascribes to the Earth, that hulking, lazy body, unfit for motion, a motion as quick as that of the aethereal torches, and a triple motion at that.” (Owen Gingerich, The eye of heaven: Ptolemy, Copernicus, Kepler, New York: American Institute of Physics, 1993, 181, ISBN 0-88318-863-5)
+	- Kepler (1609)
+		- used Tycho Brahe's observations of Mars' orbit
+		- laws of planetary motion
+		- The orbit of a planet is an ellipse with the Sun at one of the two foci.
+		- A line segment joining a planet and the Sun sweeps out equal areas during equal intervals of time.[1]
+		- The square of the orbital period of a planet is proportional to the cube of the semi-major axis of its orbit.
+- Modern Astrodynamics
+	- Anders Johan Lexell (1740 – 1784)
+		- "The beginning of modern understanding of orbit determination is considered to be Anders Johan Lexell's work on computing the orbit of the comet discovered in 1770 that later was named Lexell's Comet,[1] in which Lexell computed the interaction of comet with Jupiter that first made the comet fly close to Earth and then would have expelled it from the Solar system.[2]"
+	- Johann Heinrich Lambert (1728 – 1777) 
+		- https://en.wikipedia.org/wiki/Lambert%27s_problem
+	- Carl-Friedrich Gauss (1777–1855)
+		- "Another milestone in orbit determination was Carl Friedrich Gauss' assistance in the "recovery" of the dwarf planet Ceres in 1801. Gauss' method was able to use just three observations (in the form of pairs of right ascension and declination), to find the six orbital element that completely describe an orbit. The theory of orbit determination has subsequently been developed to the point where today it is applied in GPS receivers as well as the tracking and cataloguing of newly observed minor planets."
+		- https://en.wikipedia.org/wiki/Gauss%27_method
+- The N-Body Problem
 	- what is it
 	- why is it hard
 - approximation using barnes-hutt
@@ -20,7 +77,15 @@
 
 Sources: 
 
+- https://en.wikipedia.org/wiki/Celestial_mechanics
+- https://en.m.wikipedia.org/wiki/Caroline_Herschel
+- https://en.wikipedia.org/wiki/Al-Sijzi
+- https://en.wikipedia.org/wiki/Lexell%27s_Comet
+- https://en.wikipedia.org/wiki/Fixed_stars
+- https://en.wikipedia.org/wiki/Aristarchus_of_Samos
 - https://en.wikipedia.org/wiki/Orbit_determination
+- https://en.wikipedia.org/wiki/Copernican_heliocentrism
+- https://en.wikipedia.org/wiki/Ptolemy
 - https://en.m.wikipedia.org/wiki/Barnes–Hut_simulation
 - https://en.m.wikipedia.org/wiki/N-body_simulation
 - https://en.m.wikipedia.org/wiki/Octree
@@ -29,3 +94,4 @@ Sources:
 - https://books.google.de/books/about/Fundamentals_of_Astrodynamics.html?id=UtJK8cetqGkC&source=kp_cover&redir_esc=y
 - https://books.google.de/books/about/Spacecraft_Systems_Engineering.html?id=cCYP0rVR_IEC&source=kp_cover&redir_esc=y
 - https://en.wikipedia.org/wiki/Two-line_element_set
+- Owen Gingerich, The eye of heaven: Ptolemy, Copernicus, Kepler, New York: American Institute of Physics, 1993, 181, ISBN 0-88318-863-5
