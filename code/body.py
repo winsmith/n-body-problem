@@ -1,10 +1,9 @@
 from math import sqrt
 
-G = 6.673e-11  # graviational constant
+G = 6.673e-11  # gravitational constant
+
 
 class Body:
-    solar_mass = 1.98892e30
-
     # cartesian positions
     rx: float
     ry: float
@@ -18,17 +17,15 @@ class Body:
     fy: float = 0.0
 
     mass: float
-    color: str
 
     def __init__(self, rx: float, ry: float,
                  vx: float, vy: float,
-                 mass: float, color: str):
+                 mass: float):
         self.rx = rx
         self.ry = ry
         self.vx = vx
         self.vy = vy
         self.mass = mass
-        self.color = color
 
     def __str__(self):
         return "{}, {}, {}, {}, {}".format(
@@ -73,4 +70,5 @@ class Body:
         F = (G * self.mass * other_body.mass) / (dist*dist + eps*eps)
         self.fx = self.fx + F * dx / dist
         self.fy = self.fy + F * dy / dist
+
 
