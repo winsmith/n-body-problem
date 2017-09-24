@@ -71,4 +71,7 @@ class Body:
         self.fx = self.fx + F * dx / dist
         self.fy = self.fy + F * dy / dist
 
+    def is_in(self, quad: 'Quad'):
+        return quad.contains(self.rx, self.ry)
+
 
