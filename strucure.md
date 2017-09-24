@@ -81,10 +81,14 @@
 	- it can be proven that due to the inverse square root relation of gravity to mass over distance, this only gives us very small errors as opposed to calculating every individual body
 	- However, the complexity sinks from O(n^2) to O(n log n)
 - Nerd Stuff
-	- complexity analysis
-	- tree structures
+	- tree structures in Python
+		- a class that can contain one or more of its own type
+		- recursivity
+		- make sure there is an end to the recursion at some point
 	- classes
+		- BHTree is a tree that contains sub-trees
 	- algorithms
+	- complexity analysis
 - Fun Stuff 
 	- live visualisation
 
