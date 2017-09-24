@@ -87,8 +87,27 @@ class BHTree:
             # TODO: How is this recursive?
             self.insert(b)
 
-        
+    def update_force(self, b: Body):
+        """
+        Start at the main node of the tree. Then, recursively go each branch
+        Until either we reach an external node or we reach a node that is sufficiently
+        far away that the external nodes would not matter much.
+        """
+        if self.is_external(self):
+            if self.body == b:
+                b.add_force(self.body)
+        elif self.quad.length / self.body.distance_to(b) < 2:
+            b.add_force(self.body)
+        else:
+            for quadrant in [self.nw, self.ne, self.sw, self.se]:
+                if quadrant is not None:
+                    quadrant.update_force(b)
 
+    def __str__(self):
+        if self.ne is None or self.nw is None or self.se is None or self.sw is None:
+            return f'* {self.body}\n{self.nw}{self.ne}{self.sw}{self.se}'
+        else:
+            return f'  {self.body}\n'
 
 
 
