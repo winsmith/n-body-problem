@@ -73,8 +73,8 @@
 	- for n bodies, there are n^2 interactions to calculate
 	- you have to take all bodies into account, or your result will be very imprecise 
 	- You can use this to find bodies you don't know about: Plug all bodies you know about into the equations, calculate, and if the result differs from reality, Boom, you know where to look for your new dark moon
-- approximation using barnes-hutt 
-	- organise all bodies into an odto-tree (or quad-tree for 2d), ordered by their distance from each other
+- approximation using Barnes-Hutt 
+	- organise all bodies into an octo-tree (or quad-tree for 2d), ordered by their distance from each other
 	- each Body is a leaf on the end of the tree, and saves its mass, plus its orbital parameters
 	- save the combined mass of the attached bodies for each node
 	- for far away bodies, do not calculate every body's mass and gravitational interaction individually -- instead, with increasing distance, retreat further and further up the tree and use the mass information in the upper nodes
