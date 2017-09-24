@@ -1,17 +1,16 @@
-from math import sqrt, exp, atan, pi, cos, copysign, sin
+from math import sqrt, exp, atan, pi, cos, copysign, sin, log
 from random import random
 
 from body import Body
 
-SOLAR_MASS = 1.98892e30
-UNIVERSE_RADIUS = 1e18  # the radius of the universe!!
 
-# TODO: Rename to "universe"?
-class BruteForce:
+class BruteForceUniverse:
     """Naive implementation of orbital dynamics"""
     n = 100
     bodies: [Body] = []
     should_run = False
+    solar_mass = 1.98892e30
+    radius = 1e18  # the radius of the universe!!
 
     def __init__(self):
         pass
@@ -30,7 +29,7 @@ class BruteForce:
         This is just some physics to do that
         """
         r2 = sqrt(rx*rx + ry*ry)
-        numerator = 6.67e-11 * 1e6 * SOLAR_MASS
+        numerator = 6.67e-11 * 1e6 * self.solar_mass
         return sqrt(numerator/r2)
 
     def start_the_bodies(self, n: int):
@@ -39,7 +38,7 @@ class BruteForce:
         """
 
         # Put something heavy into the center
-        self.bodies.append(Body(0, 0, 0, 0, 1e6 * SOLAR_MASS))
+        self.bodies.append(Body(0, 0, 0, 0, 1e6 * self.solar_mass))
 
         for i in range(n):
             px = 1e18 * exp(-1.8) * (.5-random())
@@ -58,7 +57,7 @@ class BruteForce:
                 vx = -vx
                 vy = -vy
 
-            mass = random() * SOLAR_MASS * 10 + 1e20
+            mass = random() * self.solar_mass * 10 + 1e20
             self.bodies.append(Body(px, py, vx, vy, mass))
 
     def add_forces(self, n):
@@ -74,4 +73,11 @@ class BruteForce:
         # Update the timestamps
         for body in self.bodies:
             body.update(1e11)
+
+    def exp(self, lmbda):
+        return -log(1 - random()) / lmbda
+
+    def action(self, event, object):
+        # TODO
+        pass
 
