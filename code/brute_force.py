@@ -1,11 +1,13 @@
 from math import sqrt, exp, atan, pi, cos, copysign, sin, log
 from random import random
 
+from bhtree import BHTree
 from body import Body
+from quad import Quad
 
 
-class BruteForceUniverse:
-    """Naive implementation of orbital dynamics"""
+class Universe:
+    """A container for orbital dynamics simulations"""
     n = 100
     bodies: [Body] = []
     should_run = False
@@ -61,6 +63,25 @@ class BruteForceUniverse:
             self.bodies.append(Body(px, py, vx, vy, mass))
 
     def add_forces(self, n):
+        """Override this method in your subclass"""
+        raise NotImplementedError
+
+    def exp(self, lmbda):
+        """
+        A function to return an exponential distribution for position
+        """
+        return -log(1 - random()) / lmbda
+
+    def action(self, event, object):
+        # TODO
+        pass
+
+
+class BruteForceUniverse(Universe):
+    """
+    Naive implementation of orbital dynamics
+    """
+    def add_forces(self, n):
         for body in self.bodies:
             body.reset_force()
 
@@ -74,13 +95,26 @@ class BruteForceUniverse:
         for body in self.bodies:
             body.update(1e11)
 
-    def exp(self, lmbda):
-        """
-        A function to return an exponential distribution for position
-        """
-        return -log(1 - random()) / lmbda
 
-    def action(self, event, object):
-        # TODO
-        pass
+class BarnesHutUniverse(Universe):
+    """
+    Universe that uses a Barnes-Hut tree to calculte orbital dynamics
+    """
+    quad = Quad(0, 0, 2*1e18)
 
+    def add_forces(self, n):
+        the_tree = BHTree(self.quad)
+
+        # If the body is still on the screen, add it to the tree
+        for body in self.bodies:
+            if body.is_in(self.quad):
+                the_tree.insert(body)
+
+        # Now, use out methods in BHTree to update the forces,
+        # traveling recursively through the tree
+        for body in self.bodies:
+            body.reset_force()
+            if body.is_in(self.quad):
+                the_tree.update_force(body)
+                # Calculate the new positions on a time step dt (1e11 here)
+                body.update(1e11)
