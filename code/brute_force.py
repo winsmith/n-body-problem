@@ -75,6 +75,9 @@ class BruteForceUniverse:
             body.update(1e11)
 
     def exp(self, lmbda):
+        """
+        A function to return an exponential distribution for position
+        """
         return -log(1 - random()) / lmbda
 
     def action(self, event, object):
