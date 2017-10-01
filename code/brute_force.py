@@ -21,7 +21,7 @@ class BruteForceUniverse:
     def calculate(self):
         if not self.should_run:
             return
-        add_forces(self.n)
+        self.add_forces(self.n)
 
     def circular_velocity(self, rx: float, ry: float) -> float:
         """
