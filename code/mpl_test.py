@@ -32,12 +32,14 @@ class RenderableUniverse:
         return self.bodies
 
     def step(self):
-        pass
+        for body in bodies:
+            body.x_coordinate = body.x_coordinate + randrange(-24, 25)
+            body.y_coordinate = body.y_coordinate + randrange(-24, 25)
 
 
 class UniverseRenderer:
     body_dots = []
-    mass_display_multiplicator = 0.2
+    mass_display_multiplicator = 0.002
 
     def __init__(self, universe: RenderableUniverse):
         self.universe = universe
@@ -51,7 +53,7 @@ class UniverseRenderer:
         # plt.axis('off')
 
         # Enable the most important feature of matplotlib
-        plt.xkcd()
+        # plt.xkcd()
 
         # Cache the Background
         self.background = self.fig.canvas.copy_from_bbox(self.ax.bbox)
@@ -80,16 +82,21 @@ class UniverseRenderer:
             exit(0)
 
     def step(self):
+        # Run Universe step
+        self.universe.step()
+
         # restore background
         self.fig.canvas.restore_region(self.background)
 
-        # Update The Dot
-        for dotdata in self.body_dots:
+        # Update The Dots
+        for i in range(len(self.universe.bodies)):
+            dotdata = self.body_dots[i]
+            body = self.universe.bodies[i]
             dot = dotdata[0]
             old_ydata = dot.get_ydata()
             old_xdata = dot.get_xdata()
-            ydata = [value + randrange(-19, 20) for value in old_ydata]
-            xdata = [value + randrange(-19, 20) for value in old_xdata]
+            ydata = [body.y_coordinate]
+            xdata = [body.x_coordinate]
             dot.set_ydata(ydata)
             dot.set_xdata(xdata)
 
