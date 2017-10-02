@@ -69,7 +69,7 @@ class UniverseRenderer:
         try:
             while True:
                 self.step()
-                plt.pause(0.0001)
+                plt.pause(0.0000001)
         except KeyboardInterrupt:
             print("\nbye 🚀")
             exit(0)
@@ -78,13 +78,10 @@ class UniverseRenderer:
         # Run Universe step
         start_time = time.process_time()
         self.universe.step()
-        seconds_per_frame = time.process_time() - start_time
-        print(CURSOR_UP_ONE + ERASE_LINE)
-        print('{:.2f} FPS'.format(1/seconds_per_frame), end='', flush=True)
-
+        universe_step_time = time.process_time()
 
         # Update The Dots
-        for i in range(len(self.universe.bodies)):
+        for i in range(len(self.universe.get_bodies())):
             dot = self._body_dots[i][0]
             body = self.universe.get_bodies()[i]
             trailing_line = self._body_trailing_lines[i][0]
@@ -101,6 +98,15 @@ class UniverseRenderer:
             # Update the trailing line
             trailing_line.set_xdata([old_xdata, xdata])
             trailing_line.set_ydata([old_ydata, ydata])
+
+        universe_seconds_per_frame = universe_step_time - start_time
+        step_seconds_per_frame = time.process_time() - start_time
+
+        print(CURSOR_UP_ONE + ERASE_LINE)
+        print('{:.2f} FPS Universe ({:.2f} FPS Total)'.format(
+            1/universe_seconds_per_frame,
+            1/step_seconds_per_frame
+        ), end='', flush=True)
 
 
 class RenderableBruteForceUniverse(BruteForceUniverse, RenderableUniverse):
@@ -119,6 +125,6 @@ class RenderableBruteForceUniverse(BruteForceUniverse, RenderableUniverse):
 
 if __name__ == '__main__':
     universe = RenderableBruteForceUniverse()
-    universe.start_the_bodies(100)
+    universe.start_the_bodies(50)
     renderer = UniverseRenderer(universe)
     renderer.run()
