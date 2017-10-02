@@ -120,10 +120,10 @@ class RenderableBruteForceUniverse(BruteForceUniverse, RenderableUniverse):
         return self.solar_mass
 
     def get_x_limits(self):
-        return -self.radius/3, self.radius/3
+        return -self.radius/6, self.radius/6
 
     def get_y_limits(self):
-        return -self.radius/6, self.radius/6
+        return -self.radius/12, self.radius/12
 
     def get_bodies(self):
         return self.bodies
@@ -137,10 +137,10 @@ class RenderableBarnesHutUniverse(BarnesHutUniverse, RenderableUniverse):
         return self.solar_mass
 
     def get_x_limits(self):
-        return -self.radius/3, self.radius/3
+        return -self.radius/8, self.radius/8
 
     def get_y_limits(self):
-        return -self.radius/6, self.radius/6
+        return -self.radius/8, self.radius/8
 
     def get_bodies(self):
         return self.bodies
@@ -152,6 +152,6 @@ class RenderableBarnesHutUniverse(BarnesHutUniverse, RenderableUniverse):
 if __name__ == '__main__':
     # universe = RenderableBarnesHutUniverse()
     universe = RenderableBruteForceUniverse()
-    universe.start_the_bodies(50)
+    universe.start_the_bodies(20)
     renderer = UniverseRenderer(universe)
     renderer.run()
