@@ -34,6 +34,7 @@ class UniverseRenderer:
     min_marker_size = 1
     max_marker_size = 100
     time_warp_factor = 1e12
+    trail_size = 10
 
     _background = None
     _body_dots = []
@@ -68,9 +69,12 @@ class UniverseRenderer:
 
             self._body_dots.append(dot)
 
-            trailing_line = plt.plot([0, 0], [0, 0], dot[0].get_color())
-            trailing_line[0].set_dashes([2, 1])
-            self._body_trailing_lines.append(trailing_line)
+            trailing_lines = []
+            for _ in range(self.trail_size):
+                trailing_line = plt.plot([0, 0], [0, 0], dot[0].get_color())
+                # trailing_line[0].set_dashes([2, 1])
+                trailing_lines.append(trailing_line)
+            self._body_trailing_lines.append(trailing_lines)
 
     def run(self):
         print("Go")
@@ -105,7 +109,6 @@ class UniverseRenderer:
         for i in range(len(self.universe.get_bodies())):
             dot = self._body_dots[i][0]
             body = self.universe.get_bodies()[i]
-            trailing_line = self._body_trailing_lines[i][0]
 
             old_xdata = dot.get_xdata()
             old_ydata = dot.get_ydata()
@@ -117,8 +120,10 @@ class UniverseRenderer:
             dot.set_ydata(ydata)
 
             # Update the trailing line
-            trailing_line.set_xdata([old_xdata, xdata])
-            trailing_line.set_ydata([old_ydata, ydata])
+            trailing_line = self._body_trailing_lines[i].pop()
+            trailing_line[0].set_xdata([old_xdata, xdata])
+            trailing_line[0].set_ydata([old_ydata, ydata])
+            self._body_trailing_lines[i].insert(0, trailing_line)
 
         universe_seconds_per_frame = universe_step_time - start_time
         step_seconds_per_frame = time.process_time() - last_step_time
@@ -166,6 +171,6 @@ class RenderableBarnesHutUniverse(BarnesHutUniverse, RenderableUniverse):
 if __name__ == '__main__':
     # universe = RenderableBarnesHutUniverse()
     universe = RenderableBruteForceUniverse()
-    universe.start_the_bodies(2)
+    universe.start_the_bodies(20)
     renderer = UniverseRenderer(universe)
     renderer.run()
