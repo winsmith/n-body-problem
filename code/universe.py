@@ -51,8 +51,8 @@ class Universe:
             vx = -1 * copysign(1, py) * cos(thetav) * magv
             vy = copysign(1, px) * sin(thetav) * magv
 
-            # Orient a random 2D circular orbit
-            if random() <= 0.5:
+            # Most objects should orbit in one direction, but there may be exceptions
+            if random() <= 0.9:
                 vx = -vx
                 vy = -vy
 
