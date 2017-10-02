@@ -8,10 +8,13 @@ from quad import Quad
 
 class Universe:
     """A container for orbital dynamics simulations"""
-    n = 100
     bodies: [Body] = []
     solar_mass = 1.98892e30
     radius = 1e18  # the radius of the universe!!
+
+    @property
+    def n(self):
+        return len(self.bodies)
 
     def __init__(self):
         pass
