@@ -2,6 +2,7 @@
 from builtins import int
 from typing import Tuple, List
 
+import argparse
 import math
 import matplotlib.pyplot as plt
 import time
@@ -34,16 +35,21 @@ class UniverseRenderer:
     min_marker_size = 1
     max_marker_size = 100
     time_warp_factor = 1e12
-    trail_size = 10
 
     _background = None
     _body_dots = []
     _body_trailing_lines = []
 
-    _last_step_time = time.process_time()
+    __last_step_time = None
+    @property
+    def _last_step_time(self):
+        if self.__last_step_time is None:
+            self.__last_step_time = time.process_time()
+        return self.__last_step_time
 
-    def __init__(self, universe: RenderableUniverse):
+    def __init__(self, universe: RenderableUniverse, trail_size: int = 0):
         self.universe = universe
+        self.trail_size = trail_size
 
         self._fig, self._ax = plt.subplots(1, 1, figsize=(18, 8))
         self._ax.set_aspect('equal')
@@ -97,7 +103,7 @@ class UniverseRenderer:
 
     def step(self):
         last_step_time = self._last_step_time
-        self._last_step_time = time.process_time()
+        self.__last_step_time = time.process_time()
         frame_step_time = (self._last_step_time - last_step_time) * self.time_warp_factor
 
         # Run Universe step
@@ -120,6 +126,8 @@ class UniverseRenderer:
             dot.set_ydata(ydata)
 
             # Update the trailing line
+            if self.trail_size < 1:
+                continue
             trailing_line = self._body_trailing_lines[i].pop()
             trailing_line[0].set_xdata([old_xdata, xdata])
             trailing_line[0].set_ydata([old_ydata, ydata])
@@ -169,8 +177,21 @@ class RenderableBarnesHutUniverse(BarnesHutUniverse, RenderableUniverse):
 
 
 if __name__ == '__main__':
-    # universe = RenderableBarnesHutUniverse()
-    universe = RenderableBruteForceUniverse()
-    universe.start_the_bodies(20)
-    renderer = UniverseRenderer(universe)
+    parser = argparse.ArgumentParser(description='Simulate N-Body Problem')
+    parser.add_argument("simulation_type", help="BruteForce or BarnesHut")
+    parser.add_argument("bodies", help="The number of bodies to simulate")
+    parser.add_argument("trail_size", help="Display a trail of length x while rendering")
+    args = parser.parse_args()
+
+    universe = None
+    if args.simulation_type == 'BarnesHut':
+        universe = RenderableBarnesHutUniverse()
+    elif args.simulation_type == 'BruteForce':
+        universe = RenderableBruteForceUniverse()
+    else:
+        exit(1)
+
+    universe.start_the_bodies(int(args.bodies))
+    renderer = UniverseRenderer(universe, trail_size=int(args.trail_size))
+
     renderer.run()
