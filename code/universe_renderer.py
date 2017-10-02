@@ -28,7 +28,7 @@ class RenderableUniverse:
 
 
 class UniverseRenderer:
-    mass_display_multiplicator = 0.002
+    mass_display_multiplicator = 2e-14
 
     _background = None
     _body_dots = []
@@ -50,9 +50,8 @@ class UniverseRenderer:
 
         # Setup Dots and Lines
         for body in self.universe.get_bodies():
-            marker_size = max(math.floor(body.mass * self.mass_display_multiplicator), 8)
-            coordinates = body.get_coordinates()
-            dot = plt.plot(coordinates[0], coordinates[1], 'o', markersize=marker_size)
+            marker_size = 10 # max(math.floor(body.mass * self.mass_display_multiplicator), 8)
+            dot = plt.plot(body.rx, body.ry, 'o', markersize=marker_size)
             self._body_dots.append(dot)
 
             trailing_line = plt.plot([0, 0], [0, 0], dot[0].get_color())
@@ -120,5 +119,6 @@ class RenderableBruteForceUniverse(BruteForceUniverse, RenderableUniverse):
 
 if __name__ == '__main__':
     universe = RenderableBruteForceUniverse()
+    universe.start_the_bodies(100)
     renderer = UniverseRenderer(universe)
     renderer.run()
