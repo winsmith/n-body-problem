@@ -1,3 +1,4 @@
+# coding: utf-8
 from random import randrange
 
 import matplotlib.pyplot as plt
@@ -13,8 +14,15 @@ for _ in range(20):
              'o')
     plt.pause(0.0001)
 
-# Show results for a second before exiting
-plt.pause(1.0)
+# Pause without quitting to keep showing the graph, but listen
+# to KeyboardInterrupt signals to quit on Ctrl-C
+print("Hit Ctrl-C to exit")
+while True:
+    try:
+        plt.pause(0.5)
+    except KeyboardInterrupt:
+        print("\nbye 🚀")
+        break
 
 # uncomment to keep on screen
 # plt.ioff()
