@@ -67,7 +67,7 @@ class UniverseRenderer:
         # Uncomment in case we dont want to show the axes
         plt.axis('off')
 
-        # Enable the most important feature of matplotlib
+        # Uncomment to enable the most important feature of matplotlib
         # plt.xkcd()
 
         # Setup Dots and Lines
@@ -82,9 +82,6 @@ class UniverseRenderer:
             self._body_trailing_lines.append(trailing_line)
 
     def run(self):
-        # cache the _background
-        self._background = self._fig.canvas.copy_from_bbox(self._ax.bbox)
-
         # Render
         plt.ion()
         plt.show(False)
@@ -102,11 +99,6 @@ class UniverseRenderer:
         # Run Universe step
         self.universe.step()
 
-        # restore _background
-        # self._fig.canvas.restore_region(self._background)
-
-        self._background = self._fig.canvas.copy_from_bbox(self._ax.bbox)
-
         # Update The Dots
         for i in range(len(self.universe.bodies)):
             dot = self._body_dots[i][0]
@@ -120,15 +112,9 @@ class UniverseRenderer:
             dot.set_ydata(ydata)
             dot.set_xdata(xdata)
 
-            # redraw just the points
-            self._ax.draw_artist(dot)
-
             # Update the trailing line
             trailing_line.set_xdata([old_xdata, xdata])
             trailing_line.set_ydata([old_ydata, ydata])
-
-        # fill in the axes rectangle
-        self._fig.canvas.blit(self._ax.bbox)
 
 
 if __name__ == '__main__':
