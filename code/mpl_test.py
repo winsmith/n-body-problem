@@ -118,7 +118,7 @@ class UniverseRenderer:
 
 
 if __name__ == '__main__':
-    bodies = [RenderableBody(10000 * i) for i in range(2)]
+    bodies = [RenderableBody(3000 * i) for i in range(7)]
     universe = RenderableUniverse(bodies)
     renderer = UniverseRenderer(universe)
     renderer.run()
