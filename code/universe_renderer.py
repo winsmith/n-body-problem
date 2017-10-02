@@ -26,17 +26,20 @@ class RenderableUniverse:
     def get_bodies(self) -> List[Body]:
         raise NotImplementedError
 
-    def step(self):
+    def step(self, elapsed_time):
         raise NotImplementedError
 
 
 class UniverseRenderer:
     min_marker_size = 1
     max_marker_size = 40
+    time_warp_factor = 1e12
 
     _background = None
     _body_dots = []
     _body_trailing_lines = []
+
+    _last_step_time = time.process_time()
 
     def __init__(self, universe: RenderableUniverse):
         self.universe = universe
@@ -75,15 +78,22 @@ class UniverseRenderer:
         try:
             while True:
                 self.step()
-                plt.pause(0.000000000001)
+
+                time_since_previous_frame = time.process_time() - self._last_step_time
+                waiting_time = max(1/60 - time_since_previous_frame, 0.000000000001)
+                plt.pause(waiting_time)
         except KeyboardInterrupt:
             print("\nbye 🚀")
             exit(0)
 
     def step(self):
+        last_step_time = self._last_step_time
+        self._last_step_time = time.process_time()
+        frame_step_time = (self._last_step_time - last_step_time) * self.time_warp_factor
+
         # Run Universe step
         start_time = time.process_time()
-        self.universe.step()
+        self.universe.step(frame_step_time)
         universe_step_time = time.process_time()
 
         # Update The Dots
@@ -106,12 +116,11 @@ class UniverseRenderer:
             trailing_line.set_ydata([old_ydata, ydata])
 
         universe_seconds_per_frame = universe_step_time - start_time
-        step_seconds_per_frame = time.process_time() - start_time
+        step_seconds_per_frame = time.process_time() - last_step_time
 
         print(CURSOR_UP_ONE + ERASE_LINE)
-        print('{:.2f} FPS Universe ({:.2f} FPS Total)'.format(
-            1/universe_seconds_per_frame,
-            1/step_seconds_per_frame
+        print('{:.2f} FPS Universe'.format(
+            1/universe_seconds_per_frame
         ), end='', flush=True)
 
 
@@ -128,8 +137,8 @@ class RenderableBruteForceUniverse(BruteForceUniverse, RenderableUniverse):
     def get_bodies(self):
         return self.bodies
 
-    def step(self):
-        self.calculate()
+    def step(self, elapsed_time):
+        self.calculate(elapsed_time)
 
 
 class RenderableBarnesHutUniverse(BarnesHutUniverse, RenderableUniverse):
@@ -145,8 +154,8 @@ class RenderableBarnesHutUniverse(BarnesHutUniverse, RenderableUniverse):
     def get_bodies(self):
         return self.bodies
 
-    def step(self):
-        self.calculate()
+    def step(self, elapsed_time):
+        self.calculate(elapsed_time)
 
 
 if __name__ == '__main__':
