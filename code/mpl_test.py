@@ -1,9 +1,9 @@
 # coding: utf-8
+from builtins import int
 from random import randrange
 from typing import Tuple, List
 
-from builtins import int
-
+import math
 import matplotlib.pyplot as plt
 
 
@@ -38,35 +38,40 @@ class RenderableUniverse:
 
 
 class UniverseRenderer:
-    body_dots = []
     mass_display_multiplicator = 0.002
+
+    _background = None
+    _body_dots = []
+    _body_trailing_lines = []
 
     def __init__(self, universe: RenderableUniverse):
         self.universe = universe
 
-        self.fig, self.ax = plt.subplots(1, 1)
-        self.ax.set_aspect('equal')
-        self.ax.set_xlim(*self.universe.get_x_limits())
-        self.ax.set_ylim(*self.universe.get_y_limits())
+        self._fig, self._ax = plt.subplots(1, 1)
+        self._ax.set_aspect('equal')
+        self._ax.set_xlim(*self.universe.get_x_limits())
+        self._ax.set_ylim(*self.universe.get_y_limits())
 
         # Uncomment in case we dont want to show the axes
-        # plt.axis('off')
+        plt.axis('off')
 
         # Enable the most important feature of matplotlib
         # plt.xkcd()
 
-        # Cache the Background
-        self.background = self.fig.canvas.copy_from_bbox(self.ax.bbox)
-
-        # Setup Dots
+        # Setup Dots and Lines
         for body in self.universe.get_bodies():
-            marker_size = body.mass * self.mass_display_multiplicator
+            marker_size = max(math.floor(body.mass * self.mass_display_multiplicator), 8)
             coordinates = body.get_coordinates()
-            self.body_dots.append(plt.plot(coordinates[0], coordinates[1], 'o', marker_size))
+            dot = plt.plot(coordinates[0], coordinates[1], 'o', markersize=marker_size)
+            self._body_dots.append(dot)
+
+            trailing_line = plt.plot([0, 0], [0, 0], dot[0].get_color())
+            trailing_line[0].set_dashes([2, 1])
+            self._body_trailing_lines.append(trailing_line)
 
     def run(self):
-        # cache the background
-        self.background = self.fig.canvas.copy_from_bbox(self.ax.bbox)
+        # cache the _background
+        self._background = self._fig.canvas.copy_from_bbox(self._ax.bbox)
 
         # Render
         plt.ion()
@@ -85,14 +90,17 @@ class UniverseRenderer:
         # Run Universe step
         self.universe.step()
 
-        # restore background
-        self.fig.canvas.restore_region(self.background)
+        # restore _background
+        # self._fig.canvas.restore_region(self._background)
+
+        self._background = self._fig.canvas.copy_from_bbox(self._ax.bbox)
 
         # Update The Dots
         for i in range(len(self.universe.bodies)):
-            dotdata = self.body_dots[i]
+            dot = self._body_dots[i][0]
             body = self.universe.bodies[i]
-            dot = dotdata[0]
+            trailing_line = self._body_trailing_lines[i][0]
+
             old_ydata = dot.get_ydata()
             old_xdata = dot.get_xdata()
             ydata = [body.y_coordinate]
@@ -101,18 +109,18 @@ class UniverseRenderer:
             dot.set_xdata(xdata)
 
             # redraw just the points
-            self.ax.draw_artist(dot)
+            self._ax.draw_artist(dot)
 
             # Update the trailing line
-            trailing_line = plt.plot([old_xdata, xdata], [old_ydata, ydata], dot.get_color())
-            trailing_line[0].set_dashes([2, 1])
+            trailing_line.set_xdata([old_xdata, xdata])
+            trailing_line.set_ydata([old_ydata, ydata])
 
         # fill in the axes rectangle
-        self.fig.canvas.blit(self.ax.bbox)
+        self._fig.canvas.blit(self._ax.bbox)
 
 
 if __name__ == '__main__':
-    bodies = [RenderableBody(10000 * i) for i in range(10)]
+    bodies = [RenderableBody(10000 * i) for i in range(2)]
     universe = RenderableUniverse(bodies)
     renderer = UniverseRenderer(universe)
     renderer.run()
