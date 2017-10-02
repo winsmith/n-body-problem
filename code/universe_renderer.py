@@ -37,7 +37,7 @@ class UniverseRenderer:
     def __init__(self, universe: RenderableUniverse):
         self.universe = universe
 
-        self._fig, self._ax = plt.subplots(1, 1)
+        self._fig, self._ax = plt.subplots(1, 1, figsize=(18, 8))
         self._ax.set_aspect('equal')
         self._ax.set_xlim(*self.universe.get_x_limits())
         self._ax.set_ylim(*self.universe.get_y_limits())
@@ -105,10 +105,10 @@ class UniverseRenderer:
 
 class RenderableBruteForceUniverse(BruteForceUniverse, RenderableUniverse):
     def get_x_limits(self):
-        return -self.radius, self.radius
+        return -self.radius/3, self.radius/3
 
     def get_y_limits(self):
-        return -self.radius, self.radius
+        return -self.radius/6, self.radius/6
 
     def get_bodies(self):
         return self.bodies
