@@ -166,6 +166,6 @@ class RenderableBarnesHutUniverse(BarnesHutUniverse, RenderableUniverse):
 if __name__ == '__main__':
     # universe = RenderableBarnesHutUniverse()
     universe = RenderableBruteForceUniverse()
-    universe.start_the_bodies(120)
+    universe.start_the_bodies(2)
     renderer = UniverseRenderer(universe)
     renderer.run()

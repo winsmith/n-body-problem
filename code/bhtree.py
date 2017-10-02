@@ -3,21 +3,21 @@ from quad import Quad
 
 
 class BHTree:
-    body: Body
-    nw: 'BHTree'
-    ne: 'BHTree'
-    sw: 'BHTree'
-    se: 'BHTree'
+    body: Body = None
+    nw: 'BHTree' = None
+    ne: 'BHTree' = None
+    sw: 'BHTree' = None
+    se: 'BHTree' = None
 
     def __init__(self, quad: Quad):
         self.quad = quad
 
-    def is_external(self, t: 'BHTree') -> bool:
+    def is_leaf(self) -> bool:
         """
         If all nodes of the BHTree are null, then the quadrant represents a single body and
         it is "external" or a leaf of the tree
         """
-        return t.nw is None and t.ne is None and t.sw is None and t.se is None
+        return self.nw is None and self.ne is None and self.sw is None and self.se is None
 
     def insert(self, b: Body):
         """
@@ -31,7 +31,7 @@ class BHTree:
         # If there's already a body there, but it's not an external node
         # combine the two bodies and figure out which quadrant of the
         # tree it should be located in. Then recursively update the nodes below
-        elif not self.is_external(self):
+        elif not self.is_leaf():
             b.add_force(self.body)
 
             northwest = self.quad.NW()
@@ -62,10 +62,10 @@ class BHTree:
                 self.sw.insert(b)
                 return
 
-        # If the node is external and contains another body, create BHTrees
+        # If the node is a leaf and contains another body, create BHTrees
         # where the bodies should go, update the node, and end
         # (do not do anything recursively)
-        elif self.is_external(self):
+        else:
             c = self.body
             northwest = self.quad.NW()
             if c.is_in(northwest):
@@ -84,17 +84,16 @@ class BHTree:
                 if self.se is None:
                     self.se = BHTree(southeast)
 
-            # TODO: How is this recursive?
             self.insert(b)
 
     def update_force(self, b: Body):
         """
         Start at the main node of the tree. Then, recursively go each branch
-        Until either we reach an external node or we reach a node that is sufficiently
+        Until either we reach an leaf node or we reach a node that is sufficiently
         far away that the external nodes would not matter much.
         """
-        if self.is_external(self):
-            if self.body == b:
+        if self.is_leaf():
+            if self.body != b:
                 b.add_force(self.body)
         elif self.quad.length / self.body.distance_to(b) < 2:
             b.add_force(self.body)

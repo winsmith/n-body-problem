@@ -4,7 +4,7 @@ class Quad:
     tree, since it  holds quadrants.
     """
     def __init__(self, xmid: float, ymid: float, length: float):
-        self. xmid = xmid
+        self.xmid = xmid
         self.ymid = ymid
         self.length = length
 
@@ -12,19 +12,21 @@ class Quad:
         """
         Check if this Quadrant contains a point
         """
-        if (xmid <= self.xmid + self.length/2.0) and (xmid >= self.xmid - self.length / 2.0) and \
-            (ymid <= self.ymid + self.length/2.0) and (ymid >= self.ymid-self.length/2.0):
+        if (xmid <= self.xmid + self.length/2.0) and \
+           (xmid >= self.xmid - self.length/2.0) and \
+           (ymid <= self.ymid + self.length/2.0) and \
+           (ymid >= self.ymid - self.length/2.0):
             return True
         return False
 
     def NW(self) -> 'Quad':
-        return Quad(self.xmid - self.length/4, self.ymid + self.length/4, self.length/2.0)
+        return Quad(self.xmid-self.length/4.0, self.ymid+self.length/4.0, self.length/2.0)
 
     def NE(self) -> 'Quad':
-        return Quad(self.xmid+self.length/4, self.ymid+self.length/4, self.length/2)
+        return Quad(self.xmid+self.length/4.0, self.ymid+self.length/4.0, self.length/2.0)
 
     def SW(self) -> 'Quad':
-        return Quad(self.xmid-self.length/4, self.ymid-self.length/4, self.length/2)
+        return Quad(self.xmid-self.length/4.0, self.ymid-self.length/4.0, self.length/2.0)
 
     def SE(self) -> 'Quad':
-        return Quad(self.xmid+self.length/4, self.ymid-self.length/4, self.length/2)
+        return Quad(self.xmid+self.length/4.0, self.ymid-self.length/4.0, self.length/2.0)
