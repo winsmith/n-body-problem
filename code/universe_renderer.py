@@ -7,13 +7,16 @@ import matplotlib.pyplot as plt
 import time
 
 from body import Body
-from universe import BruteForceUniverse
+from universe import BruteForceUniverse, BarnesHutUniverse
 
 CURSOR_UP_ONE = '\x1b[1A'
 ERASE_LINE = '\x1b[2K'
 
 
 class RenderableUniverse:
+    def get_solar_mass(self) -> float:
+        raise NotImplementedError
+
     def get_x_limits(self) -> Tuple[int, int]:
         raise NotImplementedError
 
@@ -28,7 +31,8 @@ class RenderableUniverse:
 
 
 class UniverseRenderer:
-    mass_display_multiplicator = 2e-14
+    min_marker_size = 1
+    max_marker_size = 40
 
     _background = None
     _body_dots = []
@@ -50,7 +54,9 @@ class UniverseRenderer:
 
         # Setup Dots and Lines
         for body in self.universe.get_bodies():
-            marker_size = 10 # max(math.floor(body.mass * self.mass_display_multiplicator), 8)
+            marker_size = math.floor(body.mass / self.universe.get_solar_mass()) + 1
+            marker_size = min(marker_size, self.max_marker_size)
+            marker_size = max(marker_size, self.min_marker_size)
             dot = plt.plot(body.rx, body.ry, 'o', markersize=marker_size)
             self._body_dots.append(dot)
 
@@ -69,7 +75,7 @@ class UniverseRenderer:
         try:
             while True:
                 self.step()
-                plt.pause(0.0000001)
+                plt.pause(0.000000000001)
         except KeyboardInterrupt:
             print("\nbye 🚀")
             exit(0)
