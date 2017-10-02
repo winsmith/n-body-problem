@@ -8,11 +8,26 @@ import matplotlib.pyplot as plt
 
 plt.xkcd()
 plt.ion()
-for _ in range(20):
-    plt.plot([randrange(-200, 200), randrange(-200, 200)],
-             [randrange(-200, 200), randrange(-200, 200)],
-             'o')
-    plt.pause(0.0001)
+plt.xlim(-200, 200)
+plt.ylim(-200, 200)
+
+# In case we dont want to show axis dots
+# plt.axis('off')
+dots = plt.plot(0, 0, 'o', markersize=13.0)
+
+for _ in range(200):
+    # Update The Dot
+    dot = dots[0]
+    old_ydata = dot.get_ydata()
+    old_xdata = dot.get_xdata()
+    ydata = [value + randrange(-9, 10) for value in old_ydata]
+    xdata = [value + randrange(-9, 10) for value in old_xdata]
+    dot.set_ydata(ydata)
+    dot.set_xdata(xdata)
+
+    # Update the trailing line
+    plt.plot([old_xdata, xdata], [old_ydata, ydata], dot.get_color())
+    plt.pause(0.0101)
 
 # Pause without quitting to keep showing the graph, but listen
 # to KeyboardInterrupt signals to quit on Ctrl-C
