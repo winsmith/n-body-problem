@@ -32,7 +32,7 @@ class RenderableUniverse:
 
 class UniverseRenderer:
     min_marker_size = 1
-    max_marker_size = 40
+    max_marker_size = 100
     time_warp_factor = 1e12
 
     _background = None
@@ -61,6 +61,11 @@ class UniverseRenderer:
             marker_size = min(marker_size, self.max_marker_size)
             marker_size = max(marker_size, self.min_marker_size)
             dot = plt.plot(body.rx, body.ry, 'o', markersize=marker_size)
+
+            if body == self.universe.get_bodies()[0]:
+                # Special Case for the sun
+                dot[0].set_color('#FDB813')
+
             self._body_dots.append(dot)
 
             trailing_line = plt.plot([0, 0], [0, 0], dot[0].get_color())
@@ -119,7 +124,7 @@ class UniverseRenderer:
         step_seconds_per_frame = time.process_time() - last_step_time
 
         print(CURSOR_UP_ONE + ERASE_LINE)
-        print('{:.2f} FPS Universe'.format(
+        print('{:0.2f} FPS (in theory)'.format(
             1/universe_seconds_per_frame
         ), end='', flush=True)
 
@@ -161,6 +166,6 @@ class RenderableBarnesHutUniverse(BarnesHutUniverse, RenderableUniverse):
 if __name__ == '__main__':
     # universe = RenderableBarnesHutUniverse()
     universe = RenderableBruteForceUniverse()
-    universe.start_the_bodies(20)
+    universe.start_the_bodies(120)
     renderer = UniverseRenderer(universe)
     renderer.run()
