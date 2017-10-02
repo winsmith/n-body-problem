@@ -33,8 +33,20 @@ class RenderableUniverse:
 
     def step(self):
         for body in bodies:
-            body.x_coordinate = body.x_coordinate + randrange(-24, 25)
-            body.y_coordinate = body.y_coordinate + randrange(-24, 25)
+            new_x_coordinate = body.x_coordinate + randrange(-24, 25)
+            if new_x_coordinate > self.get_x_limits()[1]:
+                new_x_coordinate = self.get_x_limits()[1]
+            if new_x_coordinate < self.get_x_limits()[0]:
+                new_x_coordinate = self.get_x_limits()[0]
+
+            new_y_coordinate = body.y_coordinate + randrange(-24, 25)
+            if new_y_coordinate > self.get_y_limits()[1]:
+                new_y_coordinate = self.get_y_limits()[1]
+            if new_y_coordinate < self.get_y_limits()[0]:
+                new_y_coordinate = self.get_y_limits()[0]
+
+            body.x_coordinate = new_x_coordinate
+            body.y_coordinate = new_y_coordinate
 
 
 class UniverseRenderer:
