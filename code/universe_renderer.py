@@ -1,52 +1,30 @@
 # coding: utf-8
 from builtins import int
-from random import randrange
 from typing import Tuple, List
 
 import math
 import matplotlib.pyplot as plt
+import time
 
+from body import Body
+from universe import BruteForceUniverse
 
-class RenderableBody:
-    x_coordinate = 0.0
-    y_coordinate = 0.0
-
-    def __init__(self, mass: int):
-        self.mass = mass
-
-    def get_coordinates(self) -> Tuple[float, float]:
-        return self.x_coordinate, self.y_coordinate
+CURSOR_UP_ONE = '\x1b[1A'
+ERASE_LINE = '\x1b[2K'
 
 
 class RenderableUniverse:
-    def __init__(self, bodies: List[RenderableBody]):
-        self.bodies = bodies
-
     def get_x_limits(self) -> Tuple[int, int]:
-        return -255, 255
+        raise NotImplementedError
 
     def get_y_limits(self) -> Tuple[int, int]:
-        return -255, 255
+        raise NotImplementedError
 
-    def get_bodies(self) -> List[RenderableBody]:
-        return self.bodies
+    def get_bodies(self) -> List[Body]:
+        raise NotImplementedError
 
     def step(self):
-        for body in bodies:
-            new_x_coordinate = body.x_coordinate + randrange(-24, 25)
-            if new_x_coordinate > self.get_x_limits()[1]:
-                new_x_coordinate = self.get_x_limits()[1]
-            if new_x_coordinate < self.get_x_limits()[0]:
-                new_x_coordinate = self.get_x_limits()[0]
-
-            new_y_coordinate = body.y_coordinate + randrange(-24, 25)
-            if new_y_coordinate > self.get_y_limits()[1]:
-                new_y_coordinate = self.get_y_limits()[1]
-            if new_y_coordinate < self.get_y_limits()[0]:
-                new_y_coordinate = self.get_y_limits()[0]
-
-            body.x_coordinate = new_x_coordinate
-            body.y_coordinate = new_y_coordinate
+        raise NotImplementedError
 
 
 class UniverseRenderer:
@@ -82,6 +60,8 @@ class UniverseRenderer:
             self._body_trailing_lines.append(trailing_line)
 
     def run(self):
+        print("Go")
+
         # Render
         plt.ion()
         plt.show(False)
@@ -97,28 +77,48 @@ class UniverseRenderer:
 
     def step(self):
         # Run Universe step
+        start_time = time.process_time()
         self.universe.step()
+        seconds_per_frame = time.process_time() - start_time
+        print(CURSOR_UP_ONE + ERASE_LINE)
+        print('{:.2f} FPS'.format(1/seconds_per_frame), end='', flush=True)
+
 
         # Update The Dots
         for i in range(len(self.universe.bodies)):
             dot = self._body_dots[i][0]
-            body = self.universe.bodies[i]
+            body = self.universe.get_bodies()[i]
             trailing_line = self._body_trailing_lines[i][0]
 
-            old_ydata = dot.get_ydata()
             old_xdata = dot.get_xdata()
-            ydata = [body.y_coordinate]
-            xdata = [body.x_coordinate]
-            dot.set_ydata(ydata)
+            old_ydata = dot.get_ydata()
+            xdata = [body.rx]
+            ydata = [body.ry]
+
+            # Update the Dot
             dot.set_xdata(xdata)
+            dot.set_ydata(ydata)
 
             # Update the trailing line
             trailing_line.set_xdata([old_xdata, xdata])
             trailing_line.set_ydata([old_ydata, ydata])
 
 
+class RenderableBruteForceUniverse(BruteForceUniverse, RenderableUniverse):
+    def get_x_limits(self):
+        return -self.radius, self.radius
+
+    def get_y_limits(self):
+        return -self.radius, self.radius
+
+    def get_bodies(self):
+        return self.bodies
+
+    def step(self):
+        self.calculate()
+
+
 if __name__ == '__main__':
-    bodies = [RenderableBody(3000 * i) for i in range(7)]
-    universe = RenderableUniverse(bodies)
+    universe = RenderableBruteForceUniverse()
     renderer = UniverseRenderer(universe)
     renderer.run()

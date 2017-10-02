@@ -10,19 +10,13 @@ class Universe:
     """A container for orbital dynamics simulations"""
     n = 100
     bodies: [Body] = []
-    should_run = False
     solar_mass = 1.98892e30
     radius = 1e18  # the radius of the universe!!
 
     def __init__(self):
         pass
 
-    def stop(self):
-        self.should_run = False
-
     def calculate(self):
-        if not self.should_run:
-            return
         self.add_forces(self.n)
 
     def circular_velocity(self, rx: float, ry: float) -> float:
@@ -71,10 +65,6 @@ class Universe:
         A function to return an exponential distribution for position
         """
         return -log(1 - random()) / lmbda
-
-    def action(self, event, object):
-        # TODO
-        pass
 
 
 class BruteForceUniverse(Universe):
