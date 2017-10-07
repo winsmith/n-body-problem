@@ -71,20 +71,22 @@ class BHTree:
             if c.is_in(northwest):
                 if self.nw is None:
                     self.nw = BHTree(northwest)
+                self.insert(c)
             northeast = self.quad.NE()
             if c.is_in(northeast):
                 if self.ne is None:
                     self.ne = BHTree(northeast)
+                self.insert(c)
             southwest = self.quad.SW()
             if c.is_in(southwest):
                 if self.sw is None:
                     self.sw = BHTree(southwest)
+                self.insert(c)
             southeast = self.quad.SE()
             if c.is_in(southeast):
                 if self.se is None:
                     self.se = BHTree(southeast)
-
-            self.insert(b)
+                self.insert(c)
 
     def update_force(self, b: Body):
         """
@@ -92,10 +94,11 @@ class BHTree:
         Until either we reach an leaf node or we reach a node that is sufficiently
         far away that the external nodes would not matter much.
         """
+
         if self.is_leaf():
-            if self.body != b:
-                b.add_force(self.body)
-        elif self.quad.length / self.body.distance_to(b) < 2:
+            b.add_force(self.body)
+        elif self.body != b and self.quad.length / self.body.distance_to(b) < 2:
+            # This check is not in the original paper, but it prevents a division by zero
             b.add_force(self.body)
         else:
             for quadrant in [self.nw, self.ne, self.sw, self.se]:

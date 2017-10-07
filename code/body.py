@@ -62,6 +62,14 @@ class Body:
         other_body and add to the net force acting on this
         body
         """
+
+        # These two checks are not in the original source
+        if self == other_body:
+            return
+
+        if other_body is None:
+            return
+
         # softening parameter (just to avoid infinities)
         eps = 3E4
         dx = other_body.rx - self.rx

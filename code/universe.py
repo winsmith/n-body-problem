@@ -98,7 +98,7 @@ class BarnesHutUniverse(Universe):
     def add_forces(self, n, elapsed_time):
         the_tree = BHTree(self.quad)
 
-        # If the body is still on the screen, add it to the tree
+        # If the body is inside the current quad, add it to the tree
         for body in self.bodies:
             if body.is_in(self.quad):
                 the_tree.insert(body)
@@ -107,7 +107,8 @@ class BarnesHutUniverse(Universe):
         # traveling recursively through the tree
         for body in self.bodies:
             body.reset_force()
+            ##TODO: check if self.body is other body
             if body.is_in(self.quad):
                 the_tree.update_force(body)
-                # Calculate the new positions on a time step dt (1e11 here)
+                # Calculate the new positions
                 body.update(elapsed_time)
