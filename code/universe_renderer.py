@@ -86,17 +86,15 @@ class UniverseRenderer:
         print("Go")
 
         # Render
-        plt.ion()
         plt.show(False)
-        plt.draw()
 
         try:
             while True:
                 self.step()
-
                 time_since_previous_frame = time.process_time() - self._last_step_time
                 waiting_time = max(1/60 - time_since_previous_frame, 0.000000000001)
                 plt.pause(waiting_time)
+
         except KeyboardInterrupt:
             print("\nbye 🚀")
             exit(0)
