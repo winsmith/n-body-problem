@@ -5,6 +5,7 @@ from typing import Tuple, List
 import argparse
 import math
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 import time
 
 from body import Body
@@ -34,7 +35,7 @@ class RenderableUniverse:
 class UniverseRenderer:
     min_marker_size = 1
     max_marker_size = 100
-    time_warp_factor = 1e12
+    time_warp_factor = 1e7
 
     _background = None
     _body_dots = []
@@ -83,36 +84,26 @@ class UniverseRenderer:
             self._body_trailing_lines.append(trailing_lines)
 
     def run(self):
-        print("Go")
+        anim = animation.FuncAnimation(self._fig, self.step, 10000, interval=1, blit=True)
+        anim.save('test.mp4')
+        # plt.show()
 
-        # Render
-        plt.show(False)
-
-        try:
-            while True:
-                self.step()
-                time_since_previous_frame = time.process_time() - self._last_step_time
-                waiting_time = max(1/60 - time_since_previous_frame, 0.000000000001)
-                plt.pause(waiting_time)
-
-        except KeyboardInterrupt:
-            print("\nbye 🚀")
-            exit(0)
-
-    def step(self):
-        last_step_time = self._last_step_time
-        self.__last_step_time = time.process_time()
-        frame_step_time = (self._last_step_time - last_step_time) * self.time_warp_factor
+    def step(self, frame):
+        # last_step_time = self._last_step_time
+        # self.__last_step_time = time.process_time()
+        # frame_step_time = (self._last_step_time - last_step_time) * self.time_warp_factor
 
         # Run Universe step
-        start_time = time.process_time()
-        self.universe.step(frame_step_time)
-        universe_step_time = time.process_time()
+        # start_time = time.process_time()
+        self.universe.step(frame * self.time_warp_factor)
+        # universe_step_time = time.process_time()
 
         # Update The Dots
+        dots_to_update = []
         for i in range(len(self.universe.get_bodies())):
             dot = self._body_dots[i][0]
             body = self.universe.get_bodies()[i]
+            dots_to_update.append(dot)
 
             old_xdata = dot.get_xdata()
             old_ydata = dot.get_ydata()
@@ -130,14 +121,15 @@ class UniverseRenderer:
             trailing_line[0].set_xdata([old_xdata, xdata])
             trailing_line[0].set_ydata([old_ydata, ydata])
             self._body_trailing_lines[i].insert(0, trailing_line)
+        return dots_to_update
 
-        universe_seconds_per_frame = universe_step_time - start_time
-        step_seconds_per_frame = time.process_time() - last_step_time
-
-        print(CURSOR_UP_ONE + ERASE_LINE)
-        print('{:0.2f} FPS (in theory)'.format(
-            1/universe_seconds_per_frame
-        ), end='', flush=True)
+        # universe_seconds_per_frame = universe_step_time - start_time
+        # step_seconds_per_frame = time.process_time() - last_step_time
+        #
+        # print(CURSOR_UP_ONE + ERASE_LINE)
+        # print('{:0.2f} FPS (in theory)'.format(
+        #     1/universe_seconds_per_frame
+        # ), end='', flush=True)
 
 
 class RenderableBruteForceUniverse(BruteForceUniverse, RenderableUniverse):
