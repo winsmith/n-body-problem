@@ -56,7 +56,7 @@ class Body:
         self.fx = 0.0
         self.fy = 0.0
 
-    def add_force(self, other_body: 'Body'):
+    def accelerate(self, other_body: 'Body'):
         """
         Compute the net force acting between this body and
         other_body and add to the net force acting on this

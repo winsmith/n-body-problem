@@ -20,7 +20,7 @@ class Universe:
         pass
 
     def calculate(self, elapsed_time):
-        self.add_forces(self.n, elapsed_time)
+        self.accelerate(self.n, elapsed_time)
 
     def circular_velocity(self, rx: float, ry: float) -> float:
         """
@@ -59,7 +59,7 @@ class Universe:
             mass = random() * self.solar_mass * 10 + 1e20
             self.bodies.append(Body(px, py, vx, vy, mass))
 
-    def add_forces(self, n, elapsed_time):
+    def accelerate(self, n, elapsed_time):
         """Override this method in your subclass"""
         raise NotImplementedError
 
@@ -74,7 +74,7 @@ class BruteForceUniverse(Universe):
     """
     Naive implementation of orbital dynamics
     """
-    def add_forces(self, n, elapsed_time):
+    def accelerate(self, n, elapsed_time):
         for body in self.bodies:
             body.reset_force()
 
@@ -82,7 +82,7 @@ class BruteForceUniverse(Universe):
             # This'll get us n^2 complexity
             for other_body in self.bodies:
                 if other_body != body:
-                    body.add_force(other_body)
+                    body.accelerate(other_body)
 
         # Update the timestamps
         for body in self.bodies:
@@ -95,7 +95,7 @@ class BarnesHutUniverse(Universe):
     """
     quad = Quad(0, 0, 2*1e18)
 
-    def add_forces(self, n, elapsed_time):
+    def accelerate(self, n, elapsed_time):
         the_tree = BHTree(self.quad)
 
         # If the body is inside the current quad, add it to the tree
