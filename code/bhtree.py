@@ -32,7 +32,7 @@ class BHTree:
         # combine the two bodies and figure out which quadrant of the
         # tree it should be located in. Then recursively update the nodes below
         elif not self.is_leaf():
-            b.add_force(self.body)
+            b.accelerate(self.body)
 
             northwest = self.quad.NW()
             if b.is_in(northwest):
@@ -96,10 +96,10 @@ class BHTree:
         """
 
         if self.is_leaf():
-            b.add_force(self.body)
+            b.accelerate(self.body)
         elif self.body != b and self.quad.length / self.body.distance_to(b) < 2:
             # This check is not in the original paper, but it prevents a division by zero
-            b.add_force(self.body)
+            b.accelerate(self.body)
         else:
             for quadrant in [self.nw, self.ne, self.sw, self.se]:
                 if quadrant is not None:
