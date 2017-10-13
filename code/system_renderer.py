@@ -1,6 +1,7 @@
 # coding: utf-8
 from builtins import int
 from typing import Tuple, List
+from tqdm import tqdm
 
 import argparse
 import math
@@ -36,12 +37,14 @@ class SystemRenderer:
     min_marker_size = 1
     max_marker_size = 100
     time_warp_factor = 2e10
+    progress_bar = None
 
     _background = None
     _body_dots = []
     _body_trailing_lines = []
 
     __last_step_time = None
+
     @property
     def _last_step_time(self):
         if self.__last_step_time is None:
@@ -85,29 +88,14 @@ class SystemRenderer:
             self._body_trailing_lines.append(trailing_lines)
 
     def run(self, file_name="test.mp4"):
-        print(f"Beginning Render of {self.frames} frames...\n")
-        begin_time = time.process_time()
+        self.progress_bar = tqdm(total=self.frames, unit='frame')
         anim = animation.FuncAnimation(self._fig, self.step, self.frames, interval=30, blit=True)
         anim.save(file_name)
-        finish_time = time.process_time()
-
-        print(CURSOR_UP_ONE + ERASE_LINE, end="")
-        time_per_frame = (finish_time-begin_time)/self.frames
-        fps = 1/time_per_frame
-        print(f"\nDone. Rendering took {time_per_frame} seconds per frame ({fps} fps).")
-        # plt.show()
+        self.progress_bar.close()
 
     def step(self, frame):
-        print(CURSOR_UP_ONE + ERASE_LINE)
-        print(f"Frame {frame}", end="", flush=True)
-        # last_step_time = self._last_step_time
-        # self.__last_step_time = time.process_time()
-        # frame_step_time = (self._last_step_time - last_step_time) * self.time_warp_factor
-
-        # Run System step
-        # start_time = time.process_time()
+        self.progress_bar.update()
         self.universe.step(self.time_warp_factor)
-        # universe_step_time = time.process_time()
 
         # Update The Dots
         dots_to_update = []
@@ -133,14 +121,6 @@ class SystemRenderer:
             trailing_line[0].set_ydata([old_ydata, ydata])
             self._body_trailing_lines[i].insert(0, trailing_line)
         return dots_to_update
-
-        # universe_seconds_per_frame = universe_step_time - start_time
-        # step_seconds_per_frame = time.process_time() - last_step_time
-        #
-        # print(CURSOR_UP_ONE + ERASE_LINE)
-        # print('{:0.2f} FPS (in theory)'.format(
-        #     1/universe_seconds_per_frame
-        # ), end='', flush=True)
 
 
 class RenderableBruteForceSystem(BruteForceSystem, RenderableSystem):
