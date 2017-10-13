@@ -35,7 +35,7 @@ class RenderableSystem:
 class SystemRenderer:
     min_marker_size = 1
     max_marker_size = 100
-    time_warp_factor = 1e10
+    time_warp_factor = 2e10
 
     _background = None
     _body_dots = []
@@ -48,9 +48,10 @@ class SystemRenderer:
             self.__last_step_time = time.process_time()
         return self.__last_step_time
 
-    def __init__(self, universe: RenderableSystem, trail_size: int = 0):
+    def __init__(self, universe: RenderableSystem, frames: int, trail_size: int = 0):
         self.universe = universe
         self.trail_size = trail_size
+        self.frames = frames
 
         self._fig, self._ax = plt.subplots(1, 1, figsize=(18, 8))
         self._ax.set_aspect('equal')
@@ -83,15 +84,17 @@ class SystemRenderer:
                 trailing_lines.append(trailing_line)
             self._body_trailing_lines.append(trailing_lines)
 
-    def run(self, file_name="test.mp4", num_frames=1500):
-        print(f"Beginning Render of {num_frames} frames...\n")
+    def run(self, file_name="test.mp4"):
+        print(f"Beginning Render of {self.frames} frames...\n")
         begin_time = time.process_time()
-        anim = animation.FuncAnimation(self._fig, self.step, num_frames, interval=1, blit=True)
+        anim = animation.FuncAnimation(self._fig, self.step, self.frames, interval=30, blit=True)
         anim.save(file_name)
         finish_time = time.process_time()
 
         print(CURSOR_UP_ONE + ERASE_LINE, end="")
-        print(f"\nDone. Rendering took {(finish_time-begin_time)/num_frames} seconds per frame.")
+        time_per_frame = (finish_time-begin_time)/self.frames
+        fps = 1/time_per_frame
+        print(f"\nDone. Rendering took {time_per_frame} seconds per frame ({fps} fps).")
         # plt.show()
 
     def step(self, frame):
@@ -178,6 +181,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Simulate N-Body Problem')
     parser.add_argument("simulation_type", help="BruteForce or BarnesHut")
     parser.add_argument("bodies", help="The number of bodies to simulate")
+    parser.add_argument("frames", help="The number of frames to simulate for")
     parser.add_argument("trail_size", help="Display a trail of length x while rendering")
     args = parser.parse_args()
 
@@ -190,6 +194,6 @@ if __name__ == '__main__':
         exit(1)
 
     universe.start_the_bodies(int(args.bodies))
-    renderer = SystemRenderer(universe, trail_size=int(args.trail_size))
+    renderer = SystemRenderer(universe, frames=int(args.frames), trail_size=int(args.trail_size))
 
     renderer.run()
