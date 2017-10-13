@@ -10,7 +10,7 @@ class System:
     """A container for orbital dynamics simulations"""
     bodies: [Body] = []
     solar_mass = 1.98892e30
-    radius = 1e18  # the radius of the universe!!
+    radius = 1e18  # the radius of the system
 
     @property
     def n(self):
@@ -107,7 +107,6 @@ class BarnesHutSystem(System):
         # traveling recursively through the tree
         for body in self.bodies:
             body.reset_force()
-            ##TODO: check if self.body is other body
             if body.is_in(self.quad):
                 the_tree.update_force(body)
                 # Calculate the new positions

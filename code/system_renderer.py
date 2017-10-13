@@ -9,7 +9,7 @@ import matplotlib.animation as animation
 import time
 
 from body import Body
-from universe import BruteForceSystem, BarnesHutSystem
+from system import BruteForceSystem, BarnesHutSystem
 
 CURSOR_UP_ONE = '\x1b[1A'
 ERASE_LINE = '\x1b[2K'
@@ -35,7 +35,7 @@ class RenderableSystem:
 class SystemRenderer:
     min_marker_size = 1
     max_marker_size = 100
-    time_warp_factor = 1e7
+    time_warp_factor = 1e10
 
     _background = None
     _body_dots = []
@@ -83,19 +83,27 @@ class SystemRenderer:
                 trailing_lines.append(trailing_line)
             self._body_trailing_lines.append(trailing_lines)
 
-    def run(self):
-        anim = animation.FuncAnimation(self._fig, self.step, 10000, interval=1, blit=True)
-        anim.save('test.mp4')
+    def run(self, file_name="test.mp4", num_frames=1500):
+        print(f"Beginning Render of {num_frames} frames...\n")
+        begin_time = time.process_time()
+        anim = animation.FuncAnimation(self._fig, self.step, num_frames, interval=1, blit=True)
+        anim.save(file_name)
+        finish_time = time.process_time()
+
+        print(CURSOR_UP_ONE + ERASE_LINE, end="")
+        print(f"\nDone. Rendering took {(finish_time-begin_time)/num_frames} seconds per frame.")
         # plt.show()
 
     def step(self, frame):
+        print(CURSOR_UP_ONE + ERASE_LINE)
+        print(f"Frame {frame}", end="", flush=True)
         # last_step_time = self._last_step_time
         # self.__last_step_time = time.process_time()
         # frame_step_time = (self._last_step_time - last_step_time) * self.time_warp_factor
 
         # Run System step
         # start_time = time.process_time()
-        self.universe.step(frame * self.time_warp_factor)
+        self.universe.step(self.time_warp_factor)
         # universe_step_time = time.process_time()
 
         # Update The Dots
