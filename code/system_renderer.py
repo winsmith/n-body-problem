@@ -83,12 +83,11 @@ class SystemRenderer:
             trailing_lines = []
             for _ in range(self.trail_size):
                 trailing_line = plt.plot([0, 0], [0, 0], dot[0].get_color())
-                # trailing_line[0].set_dashes([2, 1])
                 trailing_lines.append(trailing_line)
             self._body_trailing_lines.append(trailing_lines)
 
     def run(self, file_name="test.mp4"):
-        self.progress_bar = tqdm(total=self.frames, unit='frame')
+        self.progress_bar = tqdm(total=self.frames, unit=' frames')
         anim = animation.FuncAnimation(self._fig, self.step, self.frames, interval=30, blit=True)
         anim.save(file_name)
         self.progress_bar.close()
