@@ -56,7 +56,7 @@ class SystemRenderer:
         self.trail_size = trail_size
         self.frames = frames
 
-        self._fig, self._ax = plt.subplots(1, 1, figsize=(18, 8))
+        self._fig, self._ax = plt.subplots(1, 1, figsize=(8, 8))
         self._ax.set_aspect('equal')
         self._ax.set_xlim(*self.universe.get_x_limits())
         self._ax.set_ylim(*self.universe.get_y_limits())
