@@ -56,7 +56,7 @@ class SystemRenderer:
         self.trail_size = trail_size
         self.frames = frames
 
-        self._fig, self._ax = plt.subplots(1, 1, figsize=(8, 8))
+        self._fig, self._ax = plt.subplots(1, 1, figsize=(16, 12))
         self._ax.set_aspect('equal')
         self._ax.set_xlim(*self.universe.get_x_limits())
         self._ax.set_ylim(*self.universe.get_y_limits())
@@ -69,7 +69,7 @@ class SystemRenderer:
 
         # Setup Dots and Lines
         for body in self.universe.get_bodies():
-            marker_size = math.floor(body.mass / self.universe.get_solar_mass()) + 1
+            marker_size = math.floor(body.mass / self.universe.get_solar_mass() / 2) + 1
             marker_size = min(marker_size, self.max_marker_size)
             marker_size = max(marker_size, self.min_marker_size)
             dot = plt.plot(body.rx, body.ry, 'o', markersize=marker_size)
@@ -130,7 +130,7 @@ class RenderableBruteForceSystem(BruteForceSystem, RenderableSystem):
         return -self.radius/6, self.radius/6
 
     def get_y_limits(self):
-        return -self.radius/12, self.radius/12
+        return -self.radius/8, self.radius/8
 
     def get_bodies(self):
         return self.bodies
@@ -144,7 +144,7 @@ class RenderableBarnesHutSystem(BarnesHutSystem, RenderableSystem):
         return self.solar_mass
 
     def get_x_limits(self):
-        return -self.radius/8, self.radius/8
+        return -self.radius/6, self.radius/6
 
     def get_y_limits(self):
         return -self.radius/8, self.radius/8

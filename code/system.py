@@ -35,28 +35,28 @@ class System:
         """
         Initialize N bodies with random positions and circular velocities
         """
-
         # Put something heavy into the center
         self.bodies.append(Body(0, 0, 0, 0, 1e6 * self.solar_mass))
 
+        # Put some bodies around it
         for i in range(n):
-            px = 1e18 * exp(-1.8) * (.5-random())
-            py = 1e18 * exp(-1.8) * (.5-random())
-            magv = self.circular_velocity(px, py)
+            px = (self.radius + 1e8) * exp(-1.8)  * (.5-random())
+            py = (self.radius + 1e8) * exp(-1.8) * (.5-random())
+            magv = self.circular_velocity(px, py) * (0.7 + random() * 0.5)
 
             absangle = atan(abs(py / px))
             thetav = pi / 2 - absangle
-            phiv = random() * pi
+
             # https://finnaarupnielsen.wordpress.com/2011/05/18/where-is-the-sign-function-in-python/
             vx = -1 * copysign(1, py) * cos(thetav) * magv
             vy = copysign(1, px) * sin(thetav) * magv
 
             # Most objects should orbit in one direction, but there may be exceptions
-            if random() <= 0.9:
+            if random() <= 0.8:
                 vx = -vx
                 vy = -vy
 
-            mass = random() * self.solar_mass * 10 + 1e20
+            mass = random() * self.solar_mass * 30 + 1e20
             self.bodies.append(Body(px, py, vx, vy, mass))
 
     def accelerate(self, n, elapsed_time):
