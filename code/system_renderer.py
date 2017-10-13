@@ -51,10 +51,15 @@ class SystemRenderer:
             self.__last_step_time = time.process_time()
         return self.__last_step_time
 
-    def __init__(self, universe: RenderableSystem, frames: int, trail_size: int = 0):
+    def __init__(self, universe: RenderableSystem, frames: int, trail_size: int = 0,
+                 performance_test: bool=False):
         self.universe = universe
         self.trail_size = trail_size
         self.frames = frames
+        self.performance_test = performance_test
+
+        if self.performance_test:
+            return
 
         self._fig, self._ax = plt.subplots(1, 1, figsize=(16, 12))
         self._ax.set_aspect('equal')
@@ -88,8 +93,14 @@ class SystemRenderer:
 
     def run(self, file_name="test.mp4"):
         self.progress_bar = tqdm(total=self.frames, unit=' frames')
-        anim = animation.FuncAnimation(self._fig, self.step, self.frames, interval=30, blit=True)
-        anim.save(file_name)
+        if self.performance_test:
+            for frame in range(self.frames):
+                self.progress_bar.update()
+                self.universe.step(self.time_warp_factor)
+            self.progress_bar.update()
+        else:
+            anim = animation.FuncAnimation(self._fig, self.step, self.frames, interval=30, blit=True)
+            anim.save(file_name)
         self.progress_bar.close()
 
     def step(self, frame):
@@ -162,6 +173,7 @@ if __name__ == '__main__':
     parser.add_argument("bodies", help="The number of bodies to simulate")
     parser.add_argument("frames", help="The number of frames to simulate for")
     parser.add_argument("trail_size", help="Display a trail of length x while rendering")
+    parser.add_argument("--performance_test", help="don't render anything, just calculate", action="store_true")
     args = parser.parse_args()
 
     universe = None
@@ -173,6 +185,6 @@ if __name__ == '__main__':
         exit(1)
 
     universe.start_the_bodies(int(args.bodies))
-    renderer = SystemRenderer(universe, frames=int(args.frames), trail_size=int(args.trail_size))
+    renderer = SystemRenderer(universe, frames=int(args.frames), trail_size=int(args.trail_size), performance_test=args.performance_test)
 
     renderer.run()
