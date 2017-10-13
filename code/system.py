@@ -6,7 +6,7 @@ from body import Body
 from quad import Quad
 
 
-class Universe:
+class System:
     """A container for orbital dynamics simulations"""
     bodies: [Body] = []
     solar_mass = 1.98892e30
@@ -70,7 +70,7 @@ class Universe:
         return -log(1 - random()) / lmbda
 
 
-class BruteForceUniverse(Universe):
+class BruteForceSystem(System):
     """
     Naive implementation of orbital dynamics
     """
@@ -89,9 +89,9 @@ class BruteForceUniverse(Universe):
             body.update(elapsed_time)
 
 
-class BarnesHutUniverse(Universe):
+class BarnesHutSystem(System):
     """
-    Universe that uses a Barnes-Hut tree to calculte orbital dynamics
+    System that uses a Barnes-Hut tree to calculte orbital dynamics
     """
     quad = Quad(0, 0, 2*1e18)
 

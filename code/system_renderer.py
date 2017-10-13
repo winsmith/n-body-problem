@@ -9,13 +9,13 @@ import matplotlib.animation as animation
 import time
 
 from body import Body
-from universe import BruteForceUniverse, BarnesHutUniverse
+from universe import BruteForceSystem, BarnesHutSystem
 
 CURSOR_UP_ONE = '\x1b[1A'
 ERASE_LINE = '\x1b[2K'
 
 
-class RenderableUniverse:
+class RenderableSystem:
     def get_solar_mass(self) -> float:
         raise NotImplementedError
 
@@ -32,7 +32,7 @@ class RenderableUniverse:
         raise NotImplementedError
 
 
-class UniverseRenderer:
+class SystemRenderer:
     min_marker_size = 1
     max_marker_size = 100
     time_warp_factor = 1e7
@@ -48,7 +48,7 @@ class UniverseRenderer:
             self.__last_step_time = time.process_time()
         return self.__last_step_time
 
-    def __init__(self, universe: RenderableUniverse, trail_size: int = 0):
+    def __init__(self, universe: RenderableSystem, trail_size: int = 0):
         self.universe = universe
         self.trail_size = trail_size
 
@@ -93,7 +93,7 @@ class UniverseRenderer:
         # self.__last_step_time = time.process_time()
         # frame_step_time = (self._last_step_time - last_step_time) * self.time_warp_factor
 
-        # Run Universe step
+        # Run System step
         # start_time = time.process_time()
         self.universe.step(frame * self.time_warp_factor)
         # universe_step_time = time.process_time()
@@ -132,7 +132,7 @@ class UniverseRenderer:
         # ), end='', flush=True)
 
 
-class RenderableBruteForceUniverse(BruteForceUniverse, RenderableUniverse):
+class RenderableBruteForceSystem(BruteForceSystem, RenderableSystem):
     def get_solar_mass(self):
         return self.solar_mass
 
@@ -149,7 +149,7 @@ class RenderableBruteForceUniverse(BruteForceUniverse, RenderableUniverse):
         self.calculate(elapsed_time)
 
 
-class RenderableBarnesHutUniverse(BarnesHutUniverse, RenderableUniverse):
+class RenderableBarnesHutSystem(BarnesHutSystem, RenderableSystem):
     def get_solar_mass(self):
         return self.solar_mass
 
@@ -175,13 +175,13 @@ if __name__ == '__main__':
 
     universe = None
     if args.simulation_type == 'BarnesHut':
-        universe = RenderableBarnesHutUniverse()
+        universe = RenderableBarnesHutSystem()
     elif args.simulation_type == 'BruteForce':
-        universe = RenderableBruteForceUniverse()
+        universe = RenderableBruteForceSystem()
     else:
         exit(1)
 
     universe.start_the_bodies(int(args.bodies))
-    renderer = UniverseRenderer(universe, trail_size=int(args.trail_size))
+    renderer = SystemRenderer(universe, trail_size=int(args.trail_size))
 
     renderer.run()
