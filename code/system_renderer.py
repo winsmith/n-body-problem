@@ -17,6 +17,9 @@ ERASE_LINE = '\x1b[2K'
 
 
 class RenderableSystem:
+    def name(self) -> str:
+        raise NotImplementedError
+
     def get_solar_mass(self) -> float:
         raise NotImplementedError
 
@@ -53,7 +56,7 @@ class SystemRenderer:
 
     def __init__(self, universe: RenderableSystem, frames: int, trail_size: int = 0,
                  performance_test: bool=False):
-        self.universe = universe
+        self.system = universe
         self.trail_size = trail_size
         self.frames = frames
         self.performance_test = performance_test
@@ -63,8 +66,8 @@ class SystemRenderer:
 
         self._fig, self._ax = plt.subplots(1, 1, figsize=(16, 12))
         self._ax.set_aspect('equal')
-        self._ax.set_xlim(*self.universe.get_x_limits())
-        self._ax.set_ylim(*self.universe.get_y_limits())
+        self._ax.set_xlim(*self.system.get_x_limits())
+        self._ax.set_ylim(*self.system.get_y_limits())
 
         # Uncomment in case we dont want to show the axes
         plt.axis('off')
@@ -73,13 +76,13 @@ class SystemRenderer:
         # plt.xkcd()
 
         # Setup Dots and Lines
-        for body in self.universe.get_bodies():
-            marker_size = math.floor(body.mass / self.universe.get_solar_mass() / 2) + 1
+        for body in self.system.get_bodies():
+            marker_size = math.floor(body.mass / self.system.get_solar_mass() / 2) + 1
             marker_size = min(marker_size, self.max_marker_size)
             marker_size = max(marker_size, self.min_marker_size)
             dot = plt.plot(body.rx, body.ry, 'o', markersize=marker_size)
 
-            if body == self.universe.get_bodies()[0]:
+            if body == self.system.get_bodies()[0]:
                 # Special Case for the sun
                 dot[0].set_color('#FDB813')
 
@@ -91,27 +94,28 @@ class SystemRenderer:
                 trailing_lines.append(trailing_line)
             self._body_trailing_lines.append(trailing_lines)
 
-    def run(self, file_name="test.mp4"):
+    def run(self):
         self.progress_bar = tqdm(total=self.frames, unit=' frames')
         if self.performance_test:
             for frame in range(self.frames):
                 self.progress_bar.update()
-                self.universe.step(self.time_warp_factor)
+                self.system.step(self.time_warp_factor)
             self.progress_bar.update()
         else:
+            file_name = f'render-{self.system.name()}-{len(self.system.get_bodies())}b-{self.frames}f.mp4'
             anim = animation.FuncAnimation(self._fig, self.step, self.frames, interval=30, blit=True)
             anim.save(file_name)
         self.progress_bar.close()
 
     def step(self, frame):
         self.progress_bar.update()
-        self.universe.step(self.time_warp_factor)
+        self.system.step(self.time_warp_factor)
 
         # Update The Dots
         dots_to_update = []
-        for i in range(len(self.universe.get_bodies())):
+        for i in range(len(self.system.get_bodies())):
             dot = self._body_dots[i][0]
-            body = self.universe.get_bodies()[i]
+            body = self.system.get_bodies()[i]
             dots_to_update.append(dot)
 
             old_xdata = dot.get_xdata()
@@ -134,6 +138,9 @@ class SystemRenderer:
 
 
 class RenderableBruteForceSystem(BruteForceSystem, RenderableSystem):
+    def name(self):
+        return 'BruteForce'
+
     def get_solar_mass(self):
         return self.solar_mass
 
@@ -151,6 +158,9 @@ class RenderableBruteForceSystem(BruteForceSystem, RenderableSystem):
 
 
 class RenderableBarnesHutSystem(BarnesHutSystem, RenderableSystem):
+    def name(self):
+        return 'BarnesHut'
+
     def get_solar_mass(self):
         return self.solar_mass
 
@@ -176,15 +186,15 @@ if __name__ == '__main__':
     parser.add_argument("--performance_test", help="don't render anything, just calculate", action="store_true")
     args = parser.parse_args()
 
-    universe = None
+    system = None
     if args.simulation_type == 'BarnesHut':
-        universe = RenderableBarnesHutSystem()
+        system = RenderableBarnesHutSystem()
     elif args.simulation_type == 'BruteForce':
-        universe = RenderableBruteForceSystem()
+        system = RenderableBruteForceSystem()
     else:
         exit(1)
 
-    universe.start_the_bodies(int(args.bodies))
-    renderer = SystemRenderer(universe, frames=int(args.frames), trail_size=int(args.trail_size), performance_test=args.performance_test)
+    system.start_the_bodies(int(args.bodies))
+    renderer = SystemRenderer(system, frames=int(args.frames), trail_size=int(args.trail_size), performance_test=args.performance_test)
 
     renderer.run()
