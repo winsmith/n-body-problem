@@ -172,7 +172,7 @@ if __name__ == '__main__':
     parser.add_argument("simulation_type", help="BruteForce or BarnesHut")
     parser.add_argument("bodies", help="The number of bodies to simulate")
     parser.add_argument("frames", help="The number of frames to simulate for")
-    parser.add_argument("trail_size", help="Display a trail of length x while rendering")
+    parser.add_argument("trail_size", help="Display a trail of diameter x while rendering")
     parser.add_argument("--performance_test", help="don't render anything, just calculate", action="store_true")
     args = parser.parse_args()
 

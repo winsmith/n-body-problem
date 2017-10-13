@@ -32,6 +32,7 @@ class BHTree:
         # combine the two bodies and figure out which quadrant of the
         # tree it should be located in. Then recursively update the nodes below
         elif not self.is_leaf():
+            # In this case, this means "add the acting forces together
             b.accelerate(self.body)
 
             northwest = self.quad.NW()
@@ -97,7 +98,7 @@ class BHTree:
 
         if self.is_leaf():
             b.accelerate(self.body)
-        elif self.body != b and self.quad.length / self.body.distance_to(b) < 2:
+        elif self.body != b and self.quad.diameter / self.body.distance_to(b) < 2:
             # This check is not in the original paper, but it prevents a division by zero
             b.accelerate(self.body)
         else:

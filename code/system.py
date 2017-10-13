@@ -103,7 +103,7 @@ class BarnesHutSystem(System):
             if body.is_in(self.quad):
                 the_tree.insert(body)
 
-        # Now, use out methods in BHTree to update the forces,
+        # Now, use our methods in BHTree to update the forces,
         # traveling recursively through the tree
         for body in self.bodies:
             body.reset_force()
