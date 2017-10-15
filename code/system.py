@@ -11,6 +11,10 @@ class System:
     bodies: [Body] = []
     solar_mass = 1.98892e30
     radius = 1e18  # the radius of the system
+    time_warp_factor = 2e10
+
+    def parent_body_color(self):
+        return '#FDB813'
 
     @property
     def n(self):
@@ -87,6 +91,27 @@ class BruteForceSystem(System):
         # Update the timestamps
         for body in self.bodies:
             body.update(elapsed_time)
+
+
+class ApoapsisSystem(BruteForceSystem):
+    def start_the_bodies(self, n: int):
+        # Parent Body
+        self.bodies.append(Body(0, 0, 0, 0, 1e6 * self.solar_mass))
+
+        # Child body
+        px = (self.radius + 1e8) * exp(-1.8) * (.5)
+        py = (self.radius + 1e8) * exp(-1.8) * (.5)
+        magv = self.circular_velocity(px, py) * 0.6
+
+        absangle = atan(abs(py / px))
+        thetav = pi / 2 - absangle
+
+        # https://finnaarupnielsen.wordpress.com/2011/05/18/where-is-the-sign-function-in-python/
+        vx = copysign(1, py) * cos(thetav) * magv
+        vy = -1 * copysign(1, px) * sin(thetav) * magv
+
+        mass = self.solar_mass * 1 + 1e20
+        self.bodies.append(Body(px, py, vx, vy, mass))
 
 
 class BarnesHutSystem(System):

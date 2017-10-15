@@ -10,7 +10,7 @@ import matplotlib.animation as animation
 import time
 
 from body import Body
-from system import BruteForceSystem, BarnesHutSystem
+from system import BruteForceSystem, BarnesHutSystem, ApoapsisSystem
 
 CURSOR_UP_ONE = '\x1b[1A'
 ERASE_LINE = '\x1b[2K'
@@ -39,7 +39,6 @@ class RenderableSystem:
 class SystemRenderer:
     min_marker_size = 1
     max_marker_size = 100
-    time_warp_factor = 2e10
     progress_bar = None
 
     _background = None
@@ -47,6 +46,10 @@ class SystemRenderer:
     _body_trailing_lines = []
 
     __last_step_time = None
+
+    @property
+    def time_warp_factor(self):
+        return self.system.time_warp_factor
 
     @property
     def _last_step_time(self):
@@ -84,7 +87,7 @@ class SystemRenderer:
 
             if body == self.system.get_bodies()[0]:
                 # Special Case for the sun
-                dot[0].set_color('#FDB813')
+                dot[0].set_color(self.system.parent_body_color())
 
             self._body_dots.append(dot)
 
@@ -157,6 +160,16 @@ class RenderableBruteForceSystem(BruteForceSystem, RenderableSystem):
         self.calculate(elapsed_time)
 
 
+class RenderableApoapsisExampleSystem(ApoapsisSystem, RenderableBruteForceSystem):
+    time_warp_factor = 7e10
+
+    def name(self):
+        return 'ApoapsisExample'
+
+    def parent_body_color(self):
+        return '#6B93D6'
+
+
 class RenderableBarnesHutSystem(BarnesHutSystem, RenderableSystem):
     def name(self):
         return 'BarnesHut'
@@ -191,6 +204,8 @@ if __name__ == '__main__':
         system = RenderableBarnesHutSystem()
     elif args.simulation_type == 'BruteForce':
         system = RenderableBruteForceSystem()
+    elif args.simulation_type == 'ApoapsisExample':
+        system = RenderableApoapsisExampleSystem()
     else:
         exit(1)
 
