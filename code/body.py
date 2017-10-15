@@ -79,7 +79,7 @@ class Body:
         self.fx = self.fx + F * dx / dist
         self.fy = self.fy + F * dy / dist
 
-    def is_in(self, quad: 'Quad'):
+    def is_in(self, quad: 'Quadrant'):
         return quad.contains(self.rx, self.ry)
 
 

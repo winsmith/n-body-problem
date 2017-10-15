@@ -1,4 +1,4 @@
-class Quad:
+class Quadrant:
     """
     A quadrant object that can self-subdivide. Important for creating a two-dimensional Barnes-Hut
     tree, since it  holds quadrants.
@@ -19,14 +19,14 @@ class Quad:
             return True
         return False
 
-    def NW(self) -> 'Quad':
-        return Quad(self.xmid - self.diameter / 4.0, self.ymid + self.diameter / 4.0, self.diameter / 2.0)
+    def NW(self) -> 'Quadrant':
+        return Quadrant(self.xmid - self.diameter / 4.0, self.ymid + self.diameter / 4.0, self.diameter / 2.0)
 
-    def NE(self) -> 'Quad':
-        return Quad(self.xmid + self.diameter / 4.0, self.ymid + self.diameter / 4.0, self.diameter / 2.0)
+    def NE(self) -> 'Quadrant':
+        return Quadrant(self.xmid + self.diameter / 4.0, self.ymid + self.diameter / 4.0, self.diameter / 2.0)
 
-    def SW(self) -> 'Quad':
-        return Quad(self.xmid - self.diameter / 4.0, self.ymid - self.diameter / 4.0, self.diameter / 2.0)
+    def SW(self) -> 'Quadrant':
+        return Quadrant(self.xmid - self.diameter / 4.0, self.ymid - self.diameter / 4.0, self.diameter / 2.0)
 
-    def SE(self) -> 'Quad':
-        return Quad(self.xmid + self.diameter / 4.0, self.ymid - self.diameter / 4.0, self.diameter / 2.0)
+    def SE(self) -> 'Quadrant':
+        return Quadrant(self.xmid + self.diameter / 4.0, self.ymid - self.diameter / 4.0, self.diameter / 2.0)

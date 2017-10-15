@@ -10,7 +10,8 @@ import matplotlib.animation as animation
 import time
 
 from body import Body
-from system import BruteForceSystem, BarnesHutSystem, ApoapsisSystem
+from system import BruteForceSystem, BarnesHutSystem, ApoapsisSystem, HohmannTransferSystemA, \
+    HohmannTransferSystemB, HohmannTransferSystemC
 
 CURSOR_UP_ONE = '\x1b[1A'
 ERASE_LINE = '\x1b[2K'
@@ -170,6 +171,31 @@ class RenderableApoapsisExampleSystem(ApoapsisSystem, RenderableBruteForceSystem
         return '#6B93D6'
 
 
+class RenderableHohmannTransferExampleSystemA(HohmannTransferSystemA, RenderableBruteForceSystem):
+    def name(self):
+        return 'HohmannTransferExampleA'
+
+    def parent_body_color(self):
+        return '#6B93D6'
+
+
+class RenderableHohmannTransferExampleSystemB(HohmannTransferSystemB, RenderableBruteForceSystem):
+    def name(self):
+        return 'HohmannTransferExampleB'
+
+    def parent_body_color(self):
+        return '#6B93D6'
+
+
+class RenderableHohmannTransferExampleSystemC(HohmannTransferSystemC, RenderableBruteForceSystem):
+    def name(self):
+        return 'HohmannTransferExampleC'
+
+    def parent_body_color(self):
+        return '#6B93D6'
+
+
+
 class RenderableBarnesHutSystem(BarnesHutSystem, RenderableSystem):
     def name(self):
         return 'BarnesHut'
@@ -206,6 +232,12 @@ if __name__ == '__main__':
         system = RenderableBruteForceSystem()
     elif args.simulation_type == 'ApoapsisExample':
         system = RenderableApoapsisExampleSystem()
+    elif args.simulation_type == 'HohmannExampleA':
+        system = RenderableHohmannTransferExampleSystemA()
+    elif args.simulation_type == 'HohmannExampleB':
+        system = RenderableHohmannTransferExampleSystemB()
+    elif args.simulation_type == 'HohmannExampleC':
+        system = RenderableHohmannTransferExampleSystemC()
     else:
         exit(1)
 

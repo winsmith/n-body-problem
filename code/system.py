@@ -3,7 +3,7 @@ from random import random
 
 from bhtree import BHTree
 from body import Body
-from quad import Quad
+from quad import Quadrant
 
 
 class System:
@@ -114,11 +114,77 @@ class ApoapsisSystem(BruteForceSystem):
         self.bodies.append(Body(px, py, vx, vy, mass))
 
 
+class HohmannTransferSystemA(BruteForceSystem):
+    time_warp_factor = 1e10
+    radius = 4e17
+
+    def start_the_bodies(self, n: int):
+        # Parent Body
+        self.bodies.append(Body(0, 0, 0, 0, 1e6 * self.solar_mass))
+
+        # Child body
+        px = self.radius/30
+        py = self.radius/30
+        magv = self.circular_velocity(px, py)
+
+        absangle = atan(abs(py / px))
+        thetav = pi / 2 - absangle
+
+        # https://finnaarupnielsen.wordpress.com/2011/05/18/where-is-the-sign-function-in-python/
+        vx = copysign(1, py) * cos(thetav) * magv
+        vy = -1 * copysign(1, px) * sin(thetav) * magv
+
+        mass = self.solar_mass * 10
+        self.bodies.append(Body(px, py, vx, vy, mass))
+
+
+class HohmannTransferSystemB(HohmannTransferSystemA):
+    def start_the_bodies(self, n: int):
+        # Parent Body
+        self.bodies.append(Body(0, 0, 0, 0, 1e6 * self.solar_mass))
+
+        # Child body
+        px = self.radius/30
+        py = self.radius/30
+        magv = self.circular_velocity(px, py) * 1.2
+
+        absangle = atan(abs(py / px))
+        thetav = pi / 2 - absangle
+
+        # https://finnaarupnielsen.wordpress.com/2011/05/18/where-is-the-sign-function-in-python/
+        vx = copysign(1, py) * cos(thetav) * magv
+        vy = -1 * copysign(1, px) * sin(thetav) * magv
+
+        mass = self.solar_mass * 10
+        self.bodies.append(Body(px, py, vx, vy, mass))
+
+
+class HohmannTransferSystemC(HohmannTransferSystemA):
+    def start_the_bodies(self, n: int):
+        # Parent Body
+        self.bodies.append(Body(0, 0, 0, 0, 1e6 * self.solar_mass))
+
+        # Child body
+        px = -4.331161870491374e+16
+        py = -1.3449882048469356e+16
+        magv = self.circular_velocity(px, py)
+
+        absangle = atan(abs(py / px))
+        thetav = pi / 2 - absangle
+
+        # https://finnaarupnielsen.wordpress.com/2011/05/18/where-is-the-sign-function-in-python/
+        vx = copysign(1, py) * cos(thetav) * magv
+        vy = -1 * copysign(1, px) * sin(thetav) * magv
+
+        mass = self.solar_mass * 10
+        self.bodies.append(Body(px, py, vx, vy, mass))
+
+
 class BarnesHutSystem(System):
     """
     System that uses a Barnes-Hut tree to calculte orbital dynamics
     """
-    quad = Quad(0, 0, 2*1e18)
+    quad = Quadrant(0, 0, 2 * 1e18)
 
     def accelerate(self, n, elapsed_time):
         the_tree = BHTree(self.quad)

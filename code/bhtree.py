@@ -1,5 +1,5 @@
 from body import Body
-from quad import Quad
+from quad import Quadrant
 
 
 class BHTree:
@@ -9,7 +9,7 @@ class BHTree:
     sw: 'BHTree' = None
     se: 'BHTree' = None
 
-    def __init__(self, quad: Quad):
+    def __init__(self, quad: Quadrant):
         self.quad = quad
 
     def is_leaf(self) -> bool:
@@ -99,7 +99,6 @@ class BHTree:
         if self.is_leaf():
             b.accelerate(self.body)
         elif self.body != b and self.quad.diameter / self.body.distance_to(b) < 2:
-            # This check is not in the original paper, but it prevents a division by zero
             b.accelerate(self.body)
         else:
             for quadrant in [self.nw, self.ne, self.sw, self.se]:
