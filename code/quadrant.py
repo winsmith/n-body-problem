@@ -1,7 +1,8 @@
 class Quadrant:
     """
-    A quadrant object that can self-subdivide. Important for creating a two-dimensional Barnes-Hut
-    tree, since it  holds quadrants.
+    A Quadrant describes a square region in space. In our two dimensional simulation, a quadrant
+    has x and y coordinates for its center, as well as a diameter property that describes its width
+    and height
     """
     def __init__(self, xmid: float, ymid: float, diameter: float):
         self.xmid = xmid
