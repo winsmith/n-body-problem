@@ -3,7 +3,7 @@ from random import random
 
 from bhtree import BHTree
 from body import Body
-from quad import Quadrant
+from quadrant import Quadrant
 
 
 class System:
@@ -189,7 +189,7 @@ class BarnesHutSystem(System):
     def accelerate(self, n, elapsed_time):
         the_tree = BHTree(self.quad)
 
-        # If the body is inside the current quad, add it to the tree
+        # If the body is inside the current quadrant, add it to the tree
         for body in self.bodies:
             if body.is_in(self.quad):
                 the_tree.insert(body)

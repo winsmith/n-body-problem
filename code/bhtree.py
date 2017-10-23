@@ -1,5 +1,5 @@
 from body import Body
-from quad import Quadrant
+from quadrant import Quadrant
 
 
 class BHTree:
@@ -10,7 +10,7 @@ class BHTree:
     se: 'BHTree' = None
 
     def __init__(self, quad: Quadrant):
-        self.quad = quad
+        self.quadrant = quad
 
     def is_leaf(self) -> bool:
         """
@@ -35,28 +35,28 @@ class BHTree:
             # In this case, this means "add the acting forces together
             b.accelerate(self.body)
 
-            northwest = self.quad.NW()
+            northwest = self.quadrant.NW()
             if b.is_in(northwest):
                 if self.nw is None:
                     self.nw = BHTree(northwest)
                 self.nw.insert(b)
                 return
 
-            northeast = self.quad.NE()
+            northeast = self.quadrant.NE()
             if b.is_in(northeast):
                 if self.ne is None:
                     self.ne = BHTree(northeast)
                 self.ne.insert(b)
                 return
 
-            southeast = self.quad.SE()
+            southeast = self.quadrant.SE()
             if b.is_in(southeast):
                 if self.se is None:
                     self.se = BHTree(northeast)
                 self.se.insert(b)
                 return
 
-            southwest = self.quad.SW()
+            southwest = self.quadrant.SW()
             if b.is_in(southwest):
                 if self.sw is None:
                     self.sw = BHTree(southwest)
@@ -68,22 +68,22 @@ class BHTree:
         # (do not do anything recursively)
         else:
             c = self.body
-            northwest = self.quad.NW()
+            northwest = self.quadrant.NW()
             if c.is_in(northwest):
                 if self.nw is None:
                     self.nw = BHTree(northwest)
                 self.insert(c)
-            northeast = self.quad.NE()
+            northeast = self.quadrant.NE()
             if c.is_in(northeast):
                 if self.ne is None:
                     self.ne = BHTree(northeast)
                 self.insert(c)
-            southwest = self.quad.SW()
+            southwest = self.quadrant.SW()
             if c.is_in(southwest):
                 if self.sw is None:
                     self.sw = BHTree(southwest)
                 self.insert(c)
-            southeast = self.quad.SE()
+            southeast = self.quadrant.SE()
             if c.is_in(southeast):
                 if self.se is None:
                     self.se = BHTree(southeast)
@@ -98,7 +98,7 @@ class BHTree:
 
         if self.is_leaf():
             b.accelerate(self.body)
-        elif self.body != b and self.quad.diameter / self.body.distance_to(b) < 2:
+        elif self.body != b and self.quadrant.diameter / self.body.distance_to(b) < 2:
             b.accelerate(self.body)
         else:
             for quadrant in [self.nw, self.ne, self.sw, self.se]:
