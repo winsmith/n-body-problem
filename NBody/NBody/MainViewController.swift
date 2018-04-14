@@ -10,24 +10,21 @@ import Cocoa
 import SpriteKit
 
 class MainViewController: NSViewController {
-    @IBOutlet weak var spriteKitView: SKView!
+    // MARK: Properties
+
+    // MARK: View Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let skView = view as! SKView
         let scene = UniverseScene(size: view.bounds.size)
-        spriteKitView.showsFPS = true
-        spriteKitView.showsNodeCount = true
-        spriteKitView.ignoresSiblingOrder = true
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        skView.ignoresSiblingOrder = true
         scene.scaleMode = .resizeFill
-        spriteKitView.presentScene(scene)
+        skView.presentScene(scene)
+
     }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
-
-
 }
 
