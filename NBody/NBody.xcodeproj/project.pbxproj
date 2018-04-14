@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		DC492D052081F77200E61CC5 /* UniverseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D042081F77200E61CC5 /* UniverseScene.swift */; };
+		DC492D08208222BC00E61CC5 /* Universe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D07208222BC00E61CC5 /* Universe.swift */; };
+		DC492D0A2082231900E61CC5 /* Body.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D092082231900E61CC5 /* Body.swift */; };
+		DC492D0C208223DE00E61CC5 /* Primitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D0B208223DE00E61CC5 /* Primitives.swift */; };
 		DC5C4DDF2081ED9D00ADC043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5C4DDE2081ED9D00ADC043 /* AppDelegate.swift */; };
 		DC5C4DE12081ED9D00ADC043 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5C4DE02081ED9D00ADC043 /* MainViewController.swift */; };
 		DC5C4DE32081ED9E00ADC043 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5C4DE22081ED9E00ADC043 /* Assets.xcassets */; };
@@ -16,6 +19,9 @@
 
 /* Begin PBXFileReference section */
 		DC492D042081F77200E61CC5 /* UniverseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniverseScene.swift; sourceTree = "<group>"; };
+		DC492D07208222BC00E61CC5 /* Universe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Universe.swift; sourceTree = "<group>"; };
+		DC492D092082231900E61CC5 /* Body.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Body.swift; sourceTree = "<group>"; };
+		DC492D0B208223DE00E61CC5 /* Primitives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitives.swift; sourceTree = "<group>"; };
 		DC5C4DDB2081ED9D00ADC043 /* NBody.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NBody.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5C4DDE2081ED9D00ADC043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC5C4DE02081ED9D00ADC043 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -36,9 +42,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC492D06208222AD00E61CC5 /* Simulation */ = {
+			isa = PBXGroup;
+			children = (
+				DC492D07208222BC00E61CC5 /* Universe.swift */,
+				DC492D092082231900E61CC5 /* Body.swift */,
+				DC492D0B208223DE00E61CC5 /* Primitives.swift */,
+			);
+			path = Simulation;
+			sourceTree = "<group>";
+		};
 		DC5C4DD22081ED9D00ADC043 = {
 			isa = PBXGroup;
 			children = (
+				DC492D06208222AD00E61CC5 /* Simulation */,
 				DC5C4DDD2081ED9D00ADC043 /* NBody */,
 				DC5C4DDC2081ED9D00ADC043 /* Products */,
 			);
@@ -137,8 +154,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC5C4DE12081ED9D00ADC043 /* MainViewController.swift in Sources */,
+				DC492D0C208223DE00E61CC5 /* Primitives.swift in Sources */,
 				DC492D052081F77200E61CC5 /* UniverseScene.swift in Sources */,
+				DC492D08208222BC00E61CC5 /* Universe.swift in Sources */,
 				DC5C4DDF2081ED9D00ADC043 /* AppDelegate.swift in Sources */,
+				DC492D0A2082231900E61CC5 /* Body.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+/// A container for simulation of orbital dynamics
+class Universe {
+    // MARK: Properties
+    public private(set) var bodies = [Body]()
+}
