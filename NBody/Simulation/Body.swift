@@ -8,7 +8,8 @@
 
 import Foundation
 
-class UniverseObject {
+/// Any object a universe keeps track of
+class UniverseObject: CustomStringConvertible {
     var tickNumber: Int = 0
     var name: String
 
@@ -16,26 +17,81 @@ class UniverseObject {
         self.tickNumber = tickNumber
         self.name = name
     }
-}
 
-class Body: UniverseObject {
-    var position: Position
-    var vector: Vector
+    var description: String {
+        return name
+    }
 
-    init(position: Position, vector: Vector, name: String = "Unnamed Body", tickNumber: Int = 0) {
-        self.position = position
-        self.vector = vector
-
-        super.init(tickNumber: tickNumber, name: name)
+    /// Update the UniverseObject between calculated frames
+    func update(timeSteps: Double) {
     }
 }
 
-class Planetoid: Body {
-    var mass: Float
+/// Any *physical* object a universe keeps track of
+class Body: UniverseObject {
+    /// The body's current position in the universe.
+    var position: Position
 
-    init(position: Position, vector: Vector, name: String = "Unnamed Planetoid", tickNumber: Int = 0, mass: Float = 7.34767309e22) {
+    /// The body's travel direction and speed.
+    /// Will be added to the body's position at the beginning of each step.
+    var direction: Vector
+
+    /// The sum of acting forces acting on this body.
+    /// Will be applied to the direction vector at the end of each calculation step,
+    var force: Vector
+
+    init(position: Position, direction: Vector, name: String = "Unnamed Body", tickNumber: Int = 0) {
+        self.position = position
+        self.direction = direction
+        self.force = Vector(x: 0, y: 0)
+
+        super.init(tickNumber: tickNumber, name: name)
+    }
+
+    /// Set the sum of acting forces to zero
+    func resetForce() {
+        force = Vector(x: 0, y: 0)
+    }
+
+    func move(for timeSteps: Double) {
+        position = position + direction * timeSteps
+    }
+}
+
+/// A large physical object with considerable mass
+class Planetoid: Body {
+    var mass: Double
+
+    init(position: Position, direction: Vector, name: String = "Unnamed Planetoid", tickNumber: Int = 0, mass: Double = 7.34767309e22) {
         self.mass = mass
 
-        super.init(position: position, vector: vector, name: name, tickNumber: tickNumber)
+        super.init(position: position, direction: direction, name: name, tickNumber: tickNumber)
+    }
+
+
+    /// Update the velocity and position
+    // TODO: This should work with a body as well
+    override func update(timeSteps: Double) {
+        direction = direction + force * timeSteps / mass
+        move(for: timeSteps)
+    }
+
+    /// Compute the net force acting between this body and otherBody and add to the net force acting on this body
+    // TODO: This should work between a body and a planetoid as well
+    func accelerate(with otherPlanetoid: Planetoid) {
+        guard self !== otherPlanetoid else { return }
+
+        // softening parameter (just to avoid infinities)
+        let eps = 3E4
+
+        let distance = position.distance(to: otherPlanetoid.position)
+        let distanceX = position.x - otherPlanetoid.position.x
+        let distanceY = position.y - otherPlanetoid.position.y
+        let actingForce = (G * mass * otherPlanetoid.mass) / (distance.squared + eps.squared)
+
+        force = Vector(
+            x: direction.x + actingForce * distanceX / distance,
+            y: direction.y + actingForce * distanceY / distance
+        )
     }
 }

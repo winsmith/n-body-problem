@@ -11,6 +11,11 @@
 		DC492D08208222BC00E61CC5 /* Universe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D07208222BC00E61CC5 /* Universe.swift */; };
 		DC492D0A2082231900E61CC5 /* Body.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D092082231900E61CC5 /* Body.swift */; };
 		DC492D0C208223DE00E61CC5 /* Primitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D0B208223DE00E61CC5 /* Primitives.swift */; };
+		DC492D0E208246F400E61CC5 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D0D208246F400E61CC5 /* Helpers.swift */; };
+		DC537917208533600028A108 /* strucure.md in Resources */ = {isa = PBXBuildFile; fileRef = DC537913208533600028A108 /* strucure.md */; };
+		DC537918208533600028A108 /* submission.md in Resources */ = {isa = PBXBuildFile; fileRef = DC537914208533600028A108 /* submission.md */; };
+		DC537919208533600028A108 /* sources.md in Resources */ = {isa = PBXBuildFile; fileRef = DC537915208533600028A108 /* sources.md */; };
+		DC53791A208533600028A108 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DC537916208533600028A108 /* README.md */; };
 		DC5C4DDF2081ED9D00ADC043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5C4DDE2081ED9D00ADC043 /* AppDelegate.swift */; };
 		DC5C4DE12081ED9D00ADC043 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5C4DE02081ED9D00ADC043 /* MainViewController.swift */; };
 		DC5C4DE32081ED9E00ADC043 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5C4DE22081ED9E00ADC043 /* Assets.xcassets */; };
@@ -22,6 +27,11 @@
 		DC492D07208222BC00E61CC5 /* Universe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Universe.swift; sourceTree = "<group>"; };
 		DC492D092082231900E61CC5 /* Body.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Body.swift; sourceTree = "<group>"; };
 		DC492D0B208223DE00E61CC5 /* Primitives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitives.swift; sourceTree = "<group>"; };
+		DC492D0D208246F400E61CC5 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		DC537913208533600028A108 /* strucure.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = strucure.md; path = ../strucure.md; sourceTree = "<group>"; };
+		DC537914208533600028A108 /* submission.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = submission.md; path = ../submission.md; sourceTree = "<group>"; };
+		DC537915208533600028A108 /* sources.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = sources.md; path = ../sources.md; sourceTree = "<group>"; };
+		DC537916208533600028A108 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		DC5C4DDB2081ED9D00ADC043 /* NBody.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NBody.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5C4DDE2081ED9D00ADC043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC5C4DE02081ED9D00ADC043 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -48,6 +58,7 @@
 				DC492D07208222BC00E61CC5 /* Universe.swift */,
 				DC492D092082231900E61CC5 /* Body.swift */,
 				DC492D0B208223DE00E61CC5 /* Primitives.swift */,
+				DC492D0D208246F400E61CC5 /* Helpers.swift */,
 			);
 			path = Simulation;
 			sourceTree = "<group>";
@@ -58,6 +69,10 @@
 				DC492D06208222AD00E61CC5 /* Simulation */,
 				DC5C4DDD2081ED9D00ADC043 /* NBody */,
 				DC5C4DDC2081ED9D00ADC043 /* Products */,
+				DC537916208533600028A108 /* README.md */,
+				DC537915208533600028A108 /* sources.md */,
+				DC537913208533600028A108 /* strucure.md */,
+				DC537914208533600028A108 /* submission.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,7 +156,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC53791A208533600028A108 /* README.md in Resources */,
+				DC537919208533600028A108 /* sources.md in Resources */,
+				DC537918208533600028A108 /* submission.md in Resources */,
 				DC5C4DE32081ED9E00ADC043 /* Assets.xcassets in Resources */,
+				DC537917208533600028A108 /* strucure.md in Resources */,
 				DC5C4DE62081ED9E00ADC043 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC5C4DE12081ED9D00ADC043 /* MainViewController.swift in Sources */,
+				DC492D0E208246F400E61CC5 /* Helpers.swift in Sources */,
 				DC492D0C208223DE00E61CC5 /* Primitives.swift in Sources */,
 				DC492D052081F77200E61CC5 /* UniverseScene.swift in Sources */,
 				DC492D08208222BC00E61CC5 /* Universe.swift in Sources */,
