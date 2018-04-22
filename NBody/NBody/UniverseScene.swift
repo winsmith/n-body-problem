@@ -10,14 +10,40 @@ import Foundation
 import SpriteKit
 
 class UniverseScene: SKScene {
-    let player = SKSpriteNode(imageNamed: "Rocket")
+    let universe = Universe(numberOfBodies: 100)
+    private var bodyShapes = [SKShapeNode]()
 
     override func didMove(to view: SKView) {
-        // 2
         backgroundColor = SKColor.white
-        // 3
-        player.position = CGPoint(x: size.width * 0.1, y: size.height * 0.5)
-        // 4
-        addChild(player)
+
+        for body in universe.bodies {
+            let bodyShape = createNode(for: body)
+            bodyShape.fillColor = body.color
+            bodyShapes.append(bodyShape)
+            addChild(bodyShape)
+        }
+
+        update()
+    }
+
+    func createNode(for body: Body) -> SKShapeNode {
+        // TODO: node radius should be dependent on mass
+        if let planetoid = body as? Planetoid {
+            return SKShapeNode(circleOfRadius: CGFloat(planetoid.mass / universe.solarMass))
+        } else {
+            return SKShapeNode(rectOf: CGSize(width: 10, height: 10))
+        }
+    }
+
+    func update() {
+        let minimumSideLength = min(size.width, size.height)
+        let coordinateSizingParamter = Double(minimumSideLength) / universe.radius
+
+        for index in 0..<universe.bodies.count {
+            let body = universe.bodies[index]
+            let bodyShape = bodyShapes[index]
+
+            bodyShape.position = CGPoint(x: body.position.x * coordinateSizingParamter, y: body.position.y * coordinateSizingParamter)
+        }
     }
 }

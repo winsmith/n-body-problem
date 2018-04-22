@@ -13,7 +13,9 @@ protocol Coordinate {
     var y: Double { get }
 }
 
-struct Position: Coordinate {
+struct Position: Coordinate, CustomStringConvertible {
+    var description: String { return "x: \(x), y: \(y)" }
+
     var x: Double
     var y: Double
 
@@ -33,7 +35,9 @@ struct Position: Coordinate {
     }
 }
 
-struct Vector: Coordinate {
+struct Vector: Coordinate, CustomStringConvertible {
+    var description: String { return "x: \(x), y: \(y)" }
+
     var x: Double
     var y: Double
 
