@@ -76,7 +76,7 @@ class BruteForceUniverse: Universe {
         }
 
         for body in bodies {
-            body.update(timeSteps: elapsedTicks)
+            body.update(timeSteps: Double(elapsedTicks))
         }
     }
 }
