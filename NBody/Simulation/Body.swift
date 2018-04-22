@@ -6,12 +6,14 @@
 //  Copyright © 2018 breakthesystem. All rights reserved.
 //
 
+import AppKit
 import Foundation
 
 /// Any object a universe keeps track of
 class UniverseObject: CustomStringConvertible {
     var tickNumber: Int = 0
     var name: String
+    lazy var color: NSColor = { return NSColor.random() }()
 
     init(tickNumber: Int, name: String) {
         self.tickNumber = tickNumber

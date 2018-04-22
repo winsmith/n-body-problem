@@ -23,6 +23,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC1359A7208C8E3600AAC0CE /* system.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = system.py; sourceTree = "<group>"; };
+		DC1359A8208C8E3600AAC0CE /* body.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = body.py; sourceTree = "<group>"; };
+		DC1359A9208C8E3600AAC0CE /* system_renderer.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = system_renderer.py; sourceTree = "<group>"; };
+		DC1359AA208C8E3600AAC0CE /* quadrant.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = quadrant.py; sourceTree = "<group>"; };
+		DC1359AB208C8E3600AAC0CE /* bhtree.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = bhtree.py; sourceTree = "<group>"; };
 		DC492D042081F77200E61CC5 /* UniverseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniverseScene.swift; sourceTree = "<group>"; };
 		DC492D07208222BC00E61CC5 /* Universe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Universe.swift; sourceTree = "<group>"; };
 		DC492D092082231900E61CC5 /* Body.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Body.swift; sourceTree = "<group>"; };
@@ -52,6 +57,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC1359A6208C8E3600AAC0CE /* code */ = {
+			isa = PBXGroup;
+			children = (
+				DC1359A7208C8E3600AAC0CE /* system.py */,
+				DC1359A8208C8E3600AAC0CE /* body.py */,
+				DC1359A9208C8E3600AAC0CE /* system_renderer.py */,
+				DC1359AA208C8E3600AAC0CE /* quadrant.py */,
+				DC1359AB208C8E3600AAC0CE /* bhtree.py */,
+			);
+			name = code;
+			path = ../code;
+			sourceTree = "<group>";
+		};
 		DC492D06208222AD00E61CC5 /* Simulation */ = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +84,7 @@
 		DC5C4DD22081ED9D00ADC043 = {
 			isa = PBXGroup;
 			children = (
+				DC1359A6208C8E3600AAC0CE /* code */,
 				DC492D06208222AD00E61CC5 /* Simulation */,
 				DC5C4DDD2081ED9D00ADC043 /* NBody */,
 				DC5C4DDC2081ED9D00ADC043 /* Products */,
