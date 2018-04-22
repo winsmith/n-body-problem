@@ -41,7 +41,7 @@ class Universe {
         }
     }
 
-    func accelerate(elapsedTicks: Int) {
+    func update(elapsedTime: Double) {
         fatalError("Not Implemented")
     }
 
@@ -62,7 +62,7 @@ class Universe {
 }
 
 class BruteForceUniverse: Universe {
-    override func accelerate(elapsedTicks: Int) {
+    override func update(elapsedTime: Double) {
         for body in bodies where body is Planetoid {
             body.resetForce()
 
@@ -76,7 +76,7 @@ class BruteForceUniverse: Universe {
         }
 
         for body in bodies {
-            body.update(timeSteps: Double(elapsedTicks))
+            body.update(timeSteps: elapsedTime * timeWarpFactor)
         }
     }
 }

@@ -24,7 +24,6 @@ class MainViewController: NSViewController {
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
-
     }
 }
 
