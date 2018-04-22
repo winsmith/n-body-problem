@@ -74,7 +74,9 @@ class Planetoid: Body {
     /// Update the velocity and position
     // TODO: This should work with a body as well
     override func update(timeSteps: Double) {
-        direction = direction + force * timeSteps / mass
+        let timesForce = force * timeSteps
+        let massAdjustedTimesForce = timesForce / mass
+        direction = direction + massAdjustedTimesForce
         move(for: timeSteps)
     }
 

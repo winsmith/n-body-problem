@@ -17,7 +17,6 @@ class Universe {
     // MARK: - Configuration
     public let solarMass = 1.98892e30
     public let radius = 1e18
-    public let timeWarpFactor = 2e10
     public let parentBodyColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
 
     /// Initialize N bodies with random positions and circular-ish velocities
@@ -28,13 +27,14 @@ class Universe {
             direction: Vector(x: 0, y: 0),
             name: "Sün",
             tickNumber: 0,
-            mass: solarMass
+            mass: solarMass * 1e6
         )
+        sun.color = parentBodyColor
         self.bodies.append(sun)
 
         // Put some bodies around it
         for i in 1...numberOfBodies {
-            let position = Position(x: (radius + 1e8) * exp(-1.8) * (0.5-drand48()), y: 0)
+            let position = Position(x: (radius + 1e8) * exp(-1.8) * (0.5-drand48()), y: (radius + 1e8) * exp(-1.8) * (0.5-drand48()))
             let velocity = circularVelocity(for: position)
             let mass = drand48() * solarMass * 30 + 1e20
             bodies.append(Planetoid(position: position, direction: velocity, name: "Body \(i)", tickNumber: 0, mass: mass))
@@ -52,12 +52,14 @@ class Universe {
         let r2 = sqrt(position.x.squared + position.y.squared)
         let numerator = 6.67e-11 * 1e6 * solarMass
         let circularVelocity = sqrt(numerator/r2)
+        let randomizedVelocity = circularVelocity * (0.7 + drand48() * 0.5)
+        let absangle = atan(abs(position.y / position.x))
+        let thetav = Double.pi / 2 - absangle
 
-        // TODO: Distribute among direction vector
-        //        vx = -1 * copysign(1, py) * cos(thetav) * magv
-        //        vy = copysign(1, px) * sin(thetav) * magv
+        let vx = -1 * Double(position.y.sign.rawValue) * cos(thetav) * randomizedVelocity
+        let vy = Double(position.x.sign.rawValue) * sin(thetav) * randomizedVelocity
 
-        return Vector(x: circularVelocity, y: 0)
+        return Vector(x: vx, y: vy)
     }
 }
 
@@ -76,7 +78,7 @@ class BruteForceUniverse: Universe {
         }
 
         for body in bodies {
-            body.update(timeSteps: elapsedTime * timeWarpFactor)
+            body.update(timeSteps: elapsedTime)
         }
     }
 }
