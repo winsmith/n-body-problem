@@ -10,13 +10,13 @@ import Foundation
 import SpriteKit
 
 class UniverseScene: SKScene {
-    let universe = BruteForceUniverse(numberOfBodies: 100)
+    let universe = BruteForceUniverse(numberOfBodies: 10)
     private var bodyShapes = [SKShapeNode]()
     private var bodyLabels = [SKLabelNode]()
     private var radii = [CGFloat]()
     private var lastUpdatedAt: TimeInterval?
 
-    public var timeWarpFactor = 6e14
+    public var timeWarpFactor = 6e9
 
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
@@ -40,7 +40,9 @@ class UniverseScene: SKScene {
 
     private func createNode(for body: Body) -> SKShapeNode {
         if let planetoid = body as? Planetoid {
-            return SKShapeNode(circleOfRadius: CGFloat(planetoid.mass / universe.solarMass))
+            let radius: CGFloat = min(max(CGFloat(planetoid.mass * 1e4 / universe.solarMass), 3), 200)
+            let shapenode = SKShapeNode(circleOfRadius: radius)
+            return shapenode
         } else {
             return SKShapeNode(rectOf: CGSize(width: 10, height: 10))
         }
