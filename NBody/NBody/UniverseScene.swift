@@ -37,13 +37,13 @@ class UniverseScene: SKScene {
 
     func update() {
         let minimumSideLength = min(size.width, size.height)
-        let coordinateSizingParamter = Double(minimumSideLength) / universe.radius
+        let coordinateSizingParamter = Double(minimumSideLength) / universe.radius * 100
 
         for index in 0..<universe.bodies.count {
             let body = universe.bodies[index]
             let bodyShape = bodyShapes[index]
 
-            bodyShape.position = CGPoint(x: body.position.x * coordinateSizingParamter, y: body.position.y * coordinateSizingParamter)
+            bodyShape.position = CGPoint(x: body.position.x * coordinateSizingParamter + Double(size.width / 2), y: body.position.y * coordinateSizingParamter + Double(size.height / 2))
         }
     }
 }

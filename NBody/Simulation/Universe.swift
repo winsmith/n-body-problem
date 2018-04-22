@@ -34,7 +34,7 @@ class Universe {
 
         // Put some bodies around it
         for i in 1...numberOfBodies {
-            let position = Position(x: radius + 1e8 * exp(-1.8) * 0.5-drand48(), y: 0)
+            let position = Position(x: (radius + 1e8) * exp(-1.8) * (0.5-drand48()), y: 0)
             let velocity = circularVelocity(for: position)
             let mass = drand48() * solarMass * 30 + 1e20
             bodies.append(Planetoid(position: position, direction: velocity, name: "Body \(i)", tickNumber: 0, mass: mass))

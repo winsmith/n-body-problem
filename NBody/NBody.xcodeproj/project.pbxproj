@@ -106,13 +106,13 @@
 		DC5C4DDD2081ED9D00ADC043 /* NBody */ = {
 			isa = PBXGroup;
 			children = (
+				DC5C4DE42081ED9E00ADC043 /* Main.storyboard */,
 				DC5C4DDE2081ED9D00ADC043 /* AppDelegate.swift */,
 				DC5C4DE02081ED9D00ADC043 /* MainViewController.swift */,
+				DC492D042081F77200E61CC5 /* UniverseScene.swift */,
 				DC5C4DE22081ED9E00ADC043 /* Assets.xcassets */,
-				DC5C4DE42081ED9E00ADC043 /* Main.storyboard */,
 				DC5C4DE72081ED9E00ADC043 /* Info.plist */,
 				DC5C4DE82081ED9E00ADC043 /* NBody.entitlements */,
-				DC492D042081F77200E61CC5 /* UniverseScene.swift */,
 			);
 			path = NBody;
 			sourceTree = "<group>";
