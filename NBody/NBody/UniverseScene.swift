@@ -10,67 +10,90 @@ import Foundation
 import SpriteKit
 
 class UniverseScene: SKScene {
-    let universe = BruteForceUniverse(numberOfBodies: 10)
+    let universe = BruteForceUniverse(numberOfBodies: 200)
     private var bodyShapes = [SKShapeNode]()
     private var bodyLabels = [SKLabelNode]()
-    private var radii = [CGFloat]()
+    private var bodyTrails = [SKShapeNode]()
     private var lastUpdatedAt: TimeInterval?
 
-    public var timeWarpFactor = 6e9
+    public var timeWarpFactor = 1e7
+    public var drawTrails = true
 
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
 
         // Create Shapes
         for body in universe.bodies {
-            let bodyShape = createNode(for: body)
-            bodyShape.fillColor = body.color
-            bodyShapes.append(bodyShape)
-            addChild(bodyShape)
-        }
-
-        // Create Labels
-        for body in universe.bodies {
-            let bodyLabel = SKLabelNode(text: body.name)
-            bodyLabel.fontColor = body.color
-            bodyLabels.append(bodyLabel)
-            addChild(bodyLabel)
+            createNodes(for: body)
         }
     }
 
-    private func createNode(for body: Body) -> SKShapeNode {
+    private func createNodes(for body: Body) {
+        var bodyShape: SKShapeNode?
+
         if let planetoid = body as? Planetoid {
             let radius: CGFloat = min(max(CGFloat(planetoid.mass * 1e4 / universe.solarMass), 3), 200)
-            let shapenode = SKShapeNode(circleOfRadius: radius)
-            return shapenode
+            bodyShape = SKShapeNode(circleOfRadius: radius)
         } else {
-            return SKShapeNode(rectOf: CGSize(width: 10, height: 10))
+            bodyShape = SKShapeNode(rectOf: CGSize(width: 10, height: 10))
         }
+
+        let bodyLabel = SKLabelNode(text: body.name)
+        let bodyTrail = SKShapeNode()
+
+        bodyShape!.fillColor = body.color
+        bodyLabel.fontColor = body.color
+        bodyTrail.strokeColor = body.color
+
+        bodyShapes.append(bodyShape!)
+        bodyLabels.append(bodyLabel)
+        bodyTrails.append(bodyTrail)
+
+        addChild(bodyShape!)
+        addChild(bodyLabel)
+        addChild(bodyTrail)
     }
 
     override func update(_ currentTime: TimeInterval) {
+        updateUniverseStatus(currentTime)
+        updateUniverseDisplay()
+
+        lastUpdatedAt = currentTime
+    }
+
+    fileprivate func updateUniverseDisplay() {
         let minimumSideLength = min(size.width, size.height)
-        let coordinateSizingParameter = Double(minimumSideLength) / universe.radius
+        let zoomFactor = Double(minimumSideLength) / (universe.radius * 2)
 
         for index in 0..<universe.bodies.count {
             let body = universe.bodies[index]
             let bodyShape = bodyShapes[index]
             let bodyLabel = bodyLabels[index]
+            let bodyTrail = bodyTrails[index]
 
+            // Update Shape
             bodyShape.position = CGPoint(
-                x: body.position.x * coordinateSizingParameter + Double(size.width / 2),
-                y: body.position.y * coordinateSizingParameter + Double(size.height / 2)
+                x: body.position.x * zoomFactor + Double(size.width / 2),
+                y: body.position.y * zoomFactor + Double(size.height / 2)
             )
+
+            // Update Label
             bodyLabel.position = CGPoint(x: bodyShape.position.x, y: bodyShape.position.y - (30 + (bodyShape.path?.boundingBox.height ?? 10) / 2))
+            bodyLabel.text = "\(body.name)"
+            // bodyLabel.text = "\(body.direction)"
 
-            bodyLabel.text = "\(body.name)" //" \(bodyShape.position.y)"
+            // Update Trail
+            // TODO
+            if let path = bodyTrail.path {
+            } else {
+            }
         }
+    }
 
+    fileprivate func updateUniverseStatus(_ currentTime: TimeInterval) {
         if let lastUpdatedAt = lastUpdatedAt {
             let elapsedTime = currentTime - lastUpdatedAt
             universe.update(elapsedTime: elapsedTime * timeWarpFactor)
         }
-
-        lastUpdatedAt = currentTime
     }
 }

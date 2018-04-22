@@ -84,13 +84,14 @@ class Planetoid: Body {
     // TODO: This should work between a body and a planetoid as well
     func accelerate(with otherPlanetoid: Planetoid) {
         guard self !== otherPlanetoid else { return }
+        guard otherPlanetoid.name == "Sün" else { return }
 
         // softening parameter (just to avoid infinities)
         let eps = 3E4
 
         let distance = position.distance(to: otherPlanetoid.position)
-        let distanceX = position.x - otherPlanetoid.position.x
-        let distanceY = position.y - otherPlanetoid.position.y
+        let distanceX = otherPlanetoid.position.x - position.x
+        let distanceY = otherPlanetoid.position.y - position.y
         let actingForce = (G * mass * otherPlanetoid.mass) / (distance.squared + eps.squared)
 
         force = Vector(

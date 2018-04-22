@@ -36,7 +36,9 @@ class Universe {
 
         // Put some bodies around it
         for i in 1...numberOfBodies {
-            let position = Position(x: (drand48() * 2 - 1) * radius, y: (drand48() * 2 - 1) * radius)
+            // let position = Position(x: (drand48() * 2 - 1) * radius, y: (drand48() * 2 - 1) * radius)
+            let freeSpace = 0.5
+            let position = Position(x: drand48() * radius * (1-freeSpace) + radius * freeSpace, y: 0)
             let velocity = circularVelocity(for: position)
             let mass = smallestPlanetMass + ((largestPlanetMass - smallestPlanetMass) * drand48())
             bodies.append(Planetoid(position: position, direction: velocity, name: "Body \(i)", tickNumber: 0, mass: mass))
@@ -49,21 +51,18 @@ class Universe {
 
 
     // MARK: Helper Methods
-    /// Return the orbital velocity an orbiting body should have at a given position to stay in a perfect orbit
+    /// Return the orbital velocity an orbiting body should have at a given position to stay in a stable orbit
+    // This function ignores the orbiting body's mass, so it's not very accurate for high-mass bodies
     public func circularVelocity(for position: Position) -> Vector {
-        return Vector(x: 0, y: 0)
+        let standardGravitationalParameter = G * solarMass
+        let orbitalRadius = position.distance(to: Position(x: 0, y: 0))
+        let orbitalVelocity = sqrt(standardGravitationalParameter / orbitalRadius)
 
-        let r2 = sqrt(position.x.squared + position.y.squared)
-        let numerator = 6.67e-11 * solarMass
-        let circularVelocity = sqrt(numerator/r2)
-        let randomizedVelocity = circularVelocity * (0.7 + drand48() * 0.5)
-        let absangle = atan(abs(position.y / position.x))
-        let thetav = Double.pi / 2 - absangle
-
-        let vx = -1 * Double(position.y.sign.rawValue) * cos(thetav) * randomizedVelocity
-        let vy = Double(position.x.sign.rawValue) * sin(thetav) * randomizedVelocity
-
-        return Vector(x: vx, y: vy)
+        if drand48() < 0.9 {
+            return Vector(x: 0, y: orbitalVelocity)
+        } else {
+            return Vector(x: 0, y: -orbitalVelocity)
+        }
     }
 }
 
