@@ -13,7 +13,6 @@ class UniverseScene: SKScene {
     let universe = BruteForceUniverse(numberOfBodies: 20)
     private var bodyShapes = [SKShapeNode]()
     private var bodyLabels = [SKLabelNode]()
-    private var bodyTrails = [SKShapeNode]()
     private var lastUpdatedAt: TimeInterval?
 
     public var timeWarpFactor = 1e7
@@ -38,20 +37,23 @@ class UniverseScene: SKScene {
             bodyShape = SKShapeNode(rectOf: CGSize(width: 10, height: 10))
         }
 
+        // Configure Trail
+        if let emitter = SKEmitterNode(fileNamed: "TrailParticle.sks"), drawTrails {
+            emitter.targetNode = self
+            emitter.particleColor = body.color
+            bodyShape?.addChild(emitter)
+        }
+
         let bodyLabel = SKLabelNode(text: body.name)
-        let bodyTrail = SKShapeNode()
 
         bodyShape!.fillColor = body.color
         bodyLabel.fontColor = body.color
-        bodyTrail.strokeColor = body.color
 
         bodyShapes.append(bodyShape!)
         bodyLabels.append(bodyLabel)
-        bodyTrails.append(bodyTrail)
 
         addChild(bodyShape!)
         addChild(bodyLabel)
-        addChild(bodyTrail)
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -69,7 +71,6 @@ class UniverseScene: SKScene {
             let body = universe.bodies[index]
             let bodyShape = bodyShapes[index]
             let bodyLabel = bodyLabels[index]
-            let bodyTrail = bodyTrails[index]
 
             // Update Shape
             bodyShape.position = CGPoint(
@@ -81,12 +82,6 @@ class UniverseScene: SKScene {
             bodyLabel.position = CGPoint(x: bodyShape.position.x, y: bodyShape.position.y - (30 + (bodyShape.path?.boundingBox.height ?? 10) / 2))
             bodyLabel.text = "\(body.name)"
             // bodyLabel.text = "\(body.direction)"
-
-            // Update Trail
-            // TODO
-            if let path = bodyTrail.path {
-            } else {
-            }
         }
     }
 

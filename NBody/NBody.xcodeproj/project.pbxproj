@@ -20,6 +20,7 @@
 		DC5C4DE12081ED9D00ADC043 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5C4DE02081ED9D00ADC043 /* MainViewController.swift */; };
 		DC5C4DE32081ED9E00ADC043 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5C4DE22081ED9E00ADC043 /* Assets.xcassets */; };
 		DC5C4DE62081ED9E00ADC043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC5C4DE42081ED9E00ADC043 /* Main.storyboard */; };
+		DC7AD466208E130A004066D3 /* TrailParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC7AD465208E130A004066D3 /* TrailParticle.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		DC5C4DE52081ED9E00ADC043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC5C4DE72081ED9E00ADC043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC5C4DE82081ED9E00ADC043 /* NBody.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NBody.entitlements; sourceTree = "<group>"; };
+		DC7AD465208E130A004066D3 /* TrailParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TrailParticle.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				DC5C4DE22081ED9E00ADC043 /* Assets.xcassets */,
 				DC5C4DE72081ED9E00ADC043 /* Info.plist */,
 				DC5C4DE82081ED9E00ADC043 /* NBody.entitlements */,
+				DC7AD465208E130A004066D3 /* TrailParticle.sks */,
 			);
 			path = NBody;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				DC537918208533600028A108 /* submission.md in Resources */,
 				DC5C4DE32081ED9E00ADC043 /* Assets.xcassets in Resources */,
 				DC537917208533600028A108 /* strucure.md in Resources */,
+				DC7AD466208E130A004066D3 /* TrailParticle.sks in Resources */,
 				DC5C4DE62081ED9E00ADC043 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
