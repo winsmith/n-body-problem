@@ -36,12 +36,15 @@ class Universe {
 
         // Put some bodies around it
         for i in 1...numberOfBodies {
-            // let position = Position(x: (drand48() * 2 - 1) * radius, y: (drand48() * 2 - 1) * radius)
-            let freeSpace = 0.5
+            let freeSpace = 0.5 * radius
 
-            let positionX = drand48() * radius * (1-freeSpace) + radius * freeSpace * (drand48() > 0.5 ? 1 : -1)
-            let positionY = drand48() * radius * (1-freeSpace) + radius * freeSpace * (drand48() > 0.5 ? 1 : -1)
-            let position = Position(x: positionX , y: positionY)
+            var position = Position(x: 0, y: 0)
+            repeat {
+                let positionX = (drand48() * radius * 2) - radius
+                let positionY = (drand48() * radius * 2) - radius
+                position = Position(x: positionX , y: positionY)
+            } while position.distance(to: sun.position) < freeSpace
+
             let velocity = circularVelocity(for: position)
             let mass = smallestPlanetMass + ((largestPlanetMass - smallestPlanetMass) * drand48())
             bodies.append(Planetoid(position: position, direction: velocity, name: "Body \(i)", tickNumber: 0, mass: mass))

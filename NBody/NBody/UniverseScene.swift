@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class UniverseScene: SKScene {
-    let universe = BruteForceUniverse(numberOfBodies: 20)
+    let universe = BruteForceUniverse(numberOfBodies: 70)
     private var bodyShapes = [SKShapeNode]()
     private var bodyLabels = [SKLabelNode]()
     private var lastUpdatedAt: TimeInterval?
