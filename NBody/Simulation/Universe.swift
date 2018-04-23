@@ -38,7 +38,10 @@ class Universe {
         for i in 1...numberOfBodies {
             // let position = Position(x: (drand48() * 2 - 1) * radius, y: (drand48() * 2 - 1) * radius)
             let freeSpace = 0.5
-            let position = Position(x: drand48() * radius * (1-freeSpace) + radius * freeSpace, y: 0)
+
+            let positionX = drand48() * radius * (1-freeSpace) + radius * freeSpace * (drand48() > 0.5 ? 1 : -1)
+            let positionY = drand48() * radius * (1-freeSpace) + radius * freeSpace * (drand48() > 0.5 ? 1 : -1)
+            let position = Position(x: positionX , y: positionY)
             let velocity = circularVelocity(for: position)
             let mass = smallestPlanetMass + ((largestPlanetMass - smallestPlanetMass) * drand48())
             bodies.append(Planetoid(position: position, direction: velocity, name: "Body \(i)", tickNumber: 0, mass: mass))
@@ -52,11 +55,23 @@ class Universe {
 
     // MARK: Helper Methods
     /// Return the orbital velocity an orbiting body should have at a given position to stay in a stable orbit
-    // This function ignores the orbiting body's mass, so it's not very accurate for high-mass bodies
+    ///
+    /// This function ignores the orbiting body's mass, so it's not very accurate for high-mass bodies
+    /// But that's ok since we don't want perfect boring orbits anyway.
     public func circularVelocity(for position: Position) -> Vector {
+        // Calculate orbital velocity
         let standardGravitationalParameter = G * solarMass
         let orbitalRadius = position.distance(to: Position(x: 0, y: 0))
         let orbitalVelocity = sqrt(standardGravitationalParameter / orbitalRadius)
+
+        // calculate angle at given position
+        let absoluteAngle = atan(abs(position.y / position.x))
+        let thetaV = Double.pi / 2 - absoluteAngle
+
+        // calculate velocity vector at given angle
+        let vectorX = (position.y > 0 ? -1 : 1) * cos(thetaV) * orbitalVelocity
+        let vectorY = (position.x > 0 ? 1 : -1) * sin(thetaV) * orbitalVelocity
+        return Vector(x: vectorX, y: vectorY)
 
         if drand48() < 0.9 {
             return Vector(x: 0, y: orbitalVelocity)

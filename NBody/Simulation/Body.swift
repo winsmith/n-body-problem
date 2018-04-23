@@ -84,7 +84,7 @@ class Planetoid: Body {
     // TODO: This should work between a body and a planetoid as well
     func accelerate(with otherPlanetoid: Planetoid) {
         guard self !== otherPlanetoid else { return }
-        guard otherPlanetoid.name == "Sün" else { return }
+        // guard otherPlanetoid.name == "Sün" else { return }
 
         // softening parameter (just to avoid infinities)
         let eps = 3E4
