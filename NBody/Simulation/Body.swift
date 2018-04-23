@@ -95,8 +95,8 @@ class Planetoid: Body {
         let actingForce = (G * mass * otherPlanetoid.mass) / (distance.squared + eps.squared)
 
         force = Vector(
-            x: direction.x + actingForce * distanceX / distance,
-            y: direction.y + actingForce * distanceY / distance
+            x: force.x + actingForce * distanceX / distance,
+            y: force.y + actingForce * distanceY / distance
         )
     }
 }
