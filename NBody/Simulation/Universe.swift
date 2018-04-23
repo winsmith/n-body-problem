@@ -62,7 +62,12 @@ class Universe {
         // Calculate orbital velocity
         let standardGravitationalParameter = G * solarMass
         let orbitalRadius = position.distance(to: Position(x: 0, y: 0))
-        let orbitalVelocity = sqrt(standardGravitationalParameter / orbitalRadius)
+        var orbitalVelocity = sqrt(standardGravitationalParameter / orbitalRadius)
+
+        // Reverse velocity for a small percentage of bodies
+        if drand48() < 0.9 {
+            orbitalVelocity = -orbitalVelocity
+        }
 
         // calculate angle at given position
         let absoluteAngle = atan(abs(position.y / position.x))
@@ -72,12 +77,6 @@ class Universe {
         let vectorX = (position.y > 0 ? -1 : 1) * cos(thetaV) * orbitalVelocity
         let vectorY = (position.x > 0 ? 1 : -1) * sin(thetaV) * orbitalVelocity
         return Vector(x: vectorX, y: vectorY)
-
-        if drand48() < 0.9 {
-            return Vector(x: 0, y: orbitalVelocity)
-        } else {
-            return Vector(x: 0, y: -orbitalVelocity)
-        }
     }
 }
 
