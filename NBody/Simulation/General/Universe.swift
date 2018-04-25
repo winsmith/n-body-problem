@@ -83,20 +83,3 @@ class Universe {
         return Vector(x: vectorX, y: vectorY)
     }
 }
-
-class BruteForceUniverse: Universe {
-    override func update(elapsedTime: Double) {
-        for body in bodies where body is Planetoid {
-            body.resetForce()
-
-            // uh, oh a loop inside a loop
-            // This'll get us n^2 complexity
-            for otherBody in bodies where body is Planetoid {
-                if otherBody !== body {
-                    (body as! Planetoid).accelerate(with: (otherBody as! Planetoid))
-                }
-            }
-        }
-
-    }
-}

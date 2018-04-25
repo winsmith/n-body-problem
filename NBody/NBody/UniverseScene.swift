@@ -10,17 +10,19 @@ import Foundation
 import SpriteKit
 
 class UniverseScene: SKScene {
-    let universe = BruteForceUniverse(numberOfBodies: 20)
+    let universe = Universe(numberOfBodies: 20)
     private var bodyShapes = [SKShapeNode]()
     private var bodyLabels = [SKLabelNode]()
     private var lastUpdatedAt: TimeInterval?
 
     public var timeWarpFactor = 1e7
     public var drawTrails = true
-    public var drawLabels = true
+    public var drawLabels = false
+    public var selectionAlgorithm: SelectionAlgorithm = BruteForce()
 
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
+        universe.selectionAlgorithm = selectionAlgorithm
 
         // Create Shapes
         for body in universe.bodies {

@@ -23,6 +23,7 @@
 		DC7AD466208E130A004066D3 /* TrailParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC7AD465208E130A004066D3 /* TrailParticle.sks */; };
 		DC7AD47D20909D64004066D3 /* SelectionAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD47C20909D64004066D3 /* SelectionAlgorithm.swift */; };
 		DC7AD47F20909E84004066D3 /* BruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD47E20909E84004066D3 /* BruteForce.swift */; };
+		DC7AD48120909EF8004066D3 /* BarnesHut.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD48020909EF8004066D3 /* BarnesHut.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		DC7AD465208E130A004066D3 /* TrailParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TrailParticle.sks; sourceTree = "<group>"; };
 		DC7AD47C20909D64004066D3 /* SelectionAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionAlgorithm.swift; sourceTree = "<group>"; };
 		DC7AD47E20909E84004066D3 /* BruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForce.swift; sourceTree = "<group>"; };
+		DC7AD48020909EF8004066D3 /* BarnesHut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarnesHut.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,12 +81,10 @@
 		DC492D06208222AD00E61CC5 /* Simulation */ = {
 			isa = PBXGroup;
 			children = (
-				DC492D07208222BC00E61CC5 /* Universe.swift */,
-				DC492D092082231900E61CC5 /* Body.swift */,
-				DC492D0B208223DE00E61CC5 /* Primitives.swift */,
 				DC492D0D208246F400E61CC5 /* Helpers.swift */,
-				DC7AD47C20909D64004066D3 /* SelectionAlgorithm.swift */,
-				DC7AD47E20909E84004066D3 /* BruteForce.swift */,
+				DC7AD48320909F35004066D3 /* General */,
+				DC7AD48420909F45004066D3 /* Brute Force Calculation */,
+				DC7AD48520909F50004066D3 /* Barnes Hut Calculation */,
 			);
 			path = Simulation;
 			sourceTree = "<group>";
@@ -124,6 +124,33 @@
 				DC7AD465208E130A004066D3 /* TrailParticle.sks */,
 			);
 			path = NBody;
+			sourceTree = "<group>";
+		};
+		DC7AD48320909F35004066D3 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				DC7AD47C20909D64004066D3 /* SelectionAlgorithm.swift */,
+				DC492D07208222BC00E61CC5 /* Universe.swift */,
+				DC492D092082231900E61CC5 /* Body.swift */,
+				DC492D0B208223DE00E61CC5 /* Primitives.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
+		DC7AD48420909F45004066D3 /* Brute Force Calculation */ = {
+			isa = PBXGroup;
+			children = (
+				DC7AD47E20909E84004066D3 /* BruteForce.swift */,
+			);
+			path = "Brute Force Calculation";
+			sourceTree = "<group>";
+		};
+		DC7AD48520909F50004066D3 /* Barnes Hut Calculation */ = {
+			isa = PBXGroup;
+			children = (
+				DC7AD48020909EF8004066D3 /* BarnesHut.swift */,
+			);
+			path = "Barnes Hut Calculation";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +236,7 @@
 				DC492D052081F77200E61CC5 /* UniverseScene.swift in Sources */,
 				DC492D08208222BC00E61CC5 /* Universe.swift in Sources */,
 				DC5C4DDF2081ED9D00ADC043 /* AppDelegate.swift in Sources */,
+				DC7AD48120909EF8004066D3 /* BarnesHut.swift in Sources */,
 				DC492D0A2082231900E61CC5 /* Body.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
