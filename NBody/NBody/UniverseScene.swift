@@ -10,13 +10,14 @@ import Foundation
 import SpriteKit
 
 class UniverseScene: SKScene {
-    let universe = BruteForceUniverse(numberOfBodies: 70)
+    let universe = BruteForceUniverse(numberOfBodies: 20)
     private var bodyShapes = [SKShapeNode]()
     private var bodyLabels = [SKLabelNode]()
     private var lastUpdatedAt: TimeInterval?
 
     public var timeWarpFactor = 1e7
     public var drawTrails = true
+    public var drawLabels = true
 
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
@@ -81,7 +82,7 @@ class UniverseScene: SKScene {
             // Update Label
             bodyLabel.position = CGPoint(x: bodyShape.position.x, y: bodyShape.position.y - (30 + (bodyShape.path?.boundingBox.height ?? 10) / 2))
             bodyLabel.text = "\(body.name)"
-            // bodyLabel.text = "\(body.direction)"
+            bodyLabel.fontColor = drawLabels ? body.color : NSColor.clear
         }
     }
 
