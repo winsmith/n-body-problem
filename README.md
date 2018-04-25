@@ -11,6 +11,5 @@ This branch contains the Swift version of this talk. For an older version with e
 ## To Dos
 
 - merge timeSteps and ticks and such
-- extract calculation code into its own object so the calculation can be switched between Hohmann and Brute Force at run time
 - Bodys that are not planetoids should be able to be accelerated
-- explode bodies when they crash into each other
+- explode bodies when they crash into each other 💥

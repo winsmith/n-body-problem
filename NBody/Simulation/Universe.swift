@@ -13,8 +13,9 @@ import Foundation
 class Universe {
     // MARK: Properties
     public private(set) var bodies = [Body]()
+    public var selectionAlgorithm: SelectionAlgorithm?
 
-    // MARK: - Configuration
+    // MARK: - Read-Only Configuration
     public let solarMass = 1.988435e30
     public let smallestPlanetMass = 3.30104e23
     public let largestPlanetMass = 1.89813e27
@@ -52,7 +53,7 @@ class Universe {
     }
 
     func update(elapsedTime: Double) {
-        fatalError("Not Implemented")
+        selectionAlgorithm?.update(bodies: bodies, elapsedTime: elapsedTime)
     }
 
 
@@ -97,8 +98,5 @@ class BruteForceUniverse: Universe {
             }
         }
 
-        for body in bodies {
-            body.update(timeSteps: elapsedTime)
-        }
     }
 }

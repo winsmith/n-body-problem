@@ -21,6 +21,8 @@
 		DC5C4DE32081ED9E00ADC043 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5C4DE22081ED9E00ADC043 /* Assets.xcassets */; };
 		DC5C4DE62081ED9E00ADC043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC5C4DE42081ED9E00ADC043 /* Main.storyboard */; };
 		DC7AD466208E130A004066D3 /* TrailParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC7AD465208E130A004066D3 /* TrailParticle.sks */; };
+		DC7AD47D20909D64004066D3 /* SelectionAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD47C20909D64004066D3 /* SelectionAlgorithm.swift */; };
+		DC7AD47F20909E84004066D3 /* BruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD47E20909E84004066D3 /* BruteForce.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		DC5C4DE72081ED9E00ADC043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC5C4DE82081ED9E00ADC043 /* NBody.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NBody.entitlements; sourceTree = "<group>"; };
 		DC7AD465208E130A004066D3 /* TrailParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TrailParticle.sks; sourceTree = "<group>"; };
+		DC7AD47C20909D64004066D3 /* SelectionAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionAlgorithm.swift; sourceTree = "<group>"; };
+		DC7AD47E20909E84004066D3 /* BruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForce.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 				DC492D092082231900E61CC5 /* Body.swift */,
 				DC492D0B208223DE00E61CC5 /* Primitives.swift */,
 				DC492D0D208246F400E61CC5 /* Helpers.swift */,
+				DC7AD47C20909D64004066D3 /* SelectionAlgorithm.swift */,
+				DC7AD47E20909E84004066D3 /* BruteForce.swift */,
 			);
 			path = Simulation;
 			sourceTree = "<group>";
@@ -195,7 +201,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC7AD47D20909D64004066D3 /* SelectionAlgorithm.swift in Sources */,
 				DC5C4DE12081ED9D00ADC043 /* MainViewController.swift in Sources */,
+				DC7AD47F20909E84004066D3 /* BruteForce.swift in Sources */,
 				DC492D0E208246F400E61CC5 /* Helpers.swift in Sources */,
 				DC492D0C208223DE00E61CC5 /* Primitives.swift in Sources */,
 				DC492D052081F77200E61CC5 /* UniverseScene.swift in Sources */,
