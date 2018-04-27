@@ -100,5 +100,17 @@ class UniverseScene: SKScene {
         }
     }
 
+    // MARK: - Keyboard Control
+    override func keyDown(with theEvent: NSEvent) {
+        guard let camera = camera else { return }
+        let zoomStep: CGFloat = 0.2
 
+        if theEvent.characters == "," {
+            camera.setScale(max(camera.xScale - zoomStep, 0.1))
+        }
+
+        else if theEvent.characters == "." {
+            camera.setScale(camera.xScale + zoomStep)
+        }
+    }
 }
