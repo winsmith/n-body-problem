@@ -30,7 +30,8 @@ struct RandomSolarInitializer: UniverseInitializer {
             direction: Vector(x: 0, y: 0),
             name: "Sün",
             tickNumber: 0,
-            mass: solarMass
+            mass: solarMass,
+            radius: 6.9e8
         )
         sun.color = parentBodyColor
         bodies.append(sun)

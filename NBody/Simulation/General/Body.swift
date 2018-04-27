@@ -63,9 +63,11 @@ class Body: UniverseObject {
 /// A large physical object with considerable mass
 class Planetoid: Body {
     var mass: Double
+    var radius: Double
 
-    init(position: Position, direction: Vector, name: String? = nil, tickNumber: Int = 0, mass: Double = 7.34767309e22) {
+    init(position: Position, direction: Vector, name: String? = nil, tickNumber: Int = 0, mass: Double = 7.34767309e22, radius: Double? = nil) {
         self.mass = mass
+        self.radius = radius ?? mass / 9e18
 
         super.init(position: position, direction: direction, name: name, tickNumber: tickNumber)
     }
