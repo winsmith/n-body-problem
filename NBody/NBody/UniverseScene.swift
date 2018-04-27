@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class UniverseScene: SKScene {
-    let universe = Universe(numberOfBodies: 20)
+    let universe = Universe(initializer: RandomSolarInitializer(numberOfBodies: 42))
     private var bodyShapes = [SKShapeNode]()
     private var bodyLabels = [SKLabelNode]()
     private var lastUpdatedAt: TimeInterval?
@@ -34,7 +34,7 @@ class UniverseScene: SKScene {
         var bodyShape: SKShapeNode?
 
         if let planetoid = body as? Planetoid {
-            let radius: CGFloat = min(max(CGFloat(planetoid.mass * 1e4 / universe.solarMass), 3), 200)
+            let radius: CGFloat = min(max(CGFloat(planetoid.mass * 1e4 / 2e30), 3), 200)
             bodyShape = SKShapeNode(circleOfRadius: radius)
         } else {
             bodyShape = SKShapeNode(rectOf: CGSize(width: 10, height: 10))

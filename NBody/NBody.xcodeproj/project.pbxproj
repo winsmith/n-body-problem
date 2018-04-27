@@ -26,6 +26,7 @@
 		DC7AD48120909EF8004066D3 /* BarnesHut.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD48020909EF8004066D3 /* BarnesHut.swift */; };
 		DC7AD4872090A161004066D3 /* Quadrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD4862090A161004066D3 /* Quadrant.swift */; };
 		DC7AD4892090A4FD004066D3 /* BHTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD4882090A4FD004066D3 /* BHTree.swift */; };
+		DCDBCE2A20939CCA00F2F272 /* Initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDBCE2920939CCA00F2F272 /* Initializer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		DC7AD48020909EF8004066D3 /* BarnesHut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarnesHut.swift; sourceTree = "<group>"; };
 		DC7AD4862090A161004066D3 /* Quadrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quadrant.swift; sourceTree = "<group>"; };
 		DC7AD4882090A4FD004066D3 /* BHTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BHTree.swift; sourceTree = "<group>"; };
+		DCDBCE2920939CCA00F2F272 /* Initializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 				DC492D07208222BC00E61CC5 /* Universe.swift */,
 				DC492D092082231900E61CC5 /* Body.swift */,
 				DC492D0B208223DE00E61CC5 /* Primitives.swift */,
+				DCDBCE2920939CCA00F2F272 /* Initializer.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				DC492D0E208246F400E61CC5 /* Helpers.swift in Sources */,
 				DC7AD4872090A161004066D3 /* Quadrant.swift in Sources */,
 				DC7AD4892090A4FD004066D3 /* BHTree.swift in Sources */,
+				DCDBCE2A20939CCA00F2F272 /* Initializer.swift in Sources */,
 				DC492D0C208223DE00E61CC5 /* Primitives.swift in Sources */,
 				DC492D052081F77200E61CC5 /* UniverseScene.swift in Sources */,
 				DC492D08208222BC00E61CC5 /* Universe.swift in Sources */,
