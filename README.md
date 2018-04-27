@@ -13,3 +13,5 @@ This branch contains the Swift version of this talk. For an older version with e
 - merge timeSteps and ticks and such
 - Bodys that are not planetoids should be able to be accelerated
 - explode bodies when they crash into each other 💥
+- Update Readme with UniverseScene, Initializers, Calculations
+- Show labels only for named bodies

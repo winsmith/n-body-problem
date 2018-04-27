@@ -17,8 +17,10 @@ class UniverseScene: SKScene {
 
     public var timeWarpFactor = 1e7
     public var drawTrails = true
-    public var drawLabels = false
+    public var drawLabels = true
     public var selectionAlgorithm: SelectionAlgorithm = BruteForce()
+
+    public var zoomFactor = 2e30
 
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
@@ -33,12 +35,17 @@ class UniverseScene: SKScene {
     private func createNodes(for body: Body) {
         var bodyShape: SKShapeNode?
 
+        // Configure Shape
         if let planetoid = body as? Planetoid {
-            let radius: CGFloat = min(max(CGFloat(planetoid.mass * 1e4 / 2e30), 3), 200)
+            let radius: CGFloat = min(max(CGFloat(planetoid.mass * 1e4 / zoomFactor), 1), 200)
             bodyShape = SKShapeNode(circleOfRadius: radius)
         } else {
             bodyShape = SKShapeNode(rectOf: CGSize(width: 10, height: 10))
         }
+
+        bodyShape!.fillColor = body.color
+        bodyShapes.append(bodyShape!)
+        addChild(bodyShape!)
 
         // Configure Trail
         if let emitter = SKEmitterNode(fileNamed: "TrailParticle.sks"), drawTrails {
@@ -47,15 +54,10 @@ class UniverseScene: SKScene {
             bodyShape?.addChild(emitter)
         }
 
+        // Configure Label
         let bodyLabel = SKLabelNode(text: body.name)
-
-        bodyShape!.fillColor = body.color
         bodyLabel.fontColor = body.color
-
-        bodyShapes.append(bodyShape!)
         bodyLabels.append(bodyLabel)
-
-        addChild(bodyShape!)
         addChild(bodyLabel)
     }
 
@@ -83,7 +85,7 @@ class UniverseScene: SKScene {
 
             // Update Label
             bodyLabel.position = CGPoint(x: bodyShape.position.x, y: bodyShape.position.y - (30 + (bodyShape.path?.boundingBox.height ?? 10) / 2))
-            bodyLabel.text = "\(body.name)"
+            bodyLabel.text = body.name
             bodyLabel.fontColor = drawLabels ? body.color : NSColor.clear
         }
     }

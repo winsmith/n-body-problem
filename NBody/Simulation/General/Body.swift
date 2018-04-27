@@ -12,16 +12,16 @@ import Foundation
 /// Any object a universe keeps track of
 class UniverseObject: CustomStringConvertible {
     var tickNumber: Int = 0
-    var name: String
+    var name: String?
     lazy var color: NSColor = { return NSColor.random() }()
 
-    init(tickNumber: Int, name: String) {
+    init(tickNumber: Int, name: String? = nil) {
         self.tickNumber = tickNumber
         self.name = name
     }
 
     var description: String {
-        return name
+        return name ?? "Unnamed UniverseObject"
     }
 
     /// Update the UniverseObject between calculated frames
@@ -42,7 +42,7 @@ class Body: UniverseObject {
     /// Will be applied to the direction vector at the end of each calculation step,
     var force: Vector
 
-    init(position: Position, direction: Vector, name: String = "Unnamed Body", tickNumber: Int = 0) {
+    init(position: Position, direction: Vector, name: String? = nil, tickNumber: Int = 0) {
         self.position = position
         self.direction = direction
         self.force = Vector(x: 0, y: 0)
@@ -64,7 +64,7 @@ class Body: UniverseObject {
 class Planetoid: Body {
     var mass: Double
 
-    init(position: Position, direction: Vector, name: String = "Unnamed Planetoid", tickNumber: Int = 0, mass: Double = 7.34767309e22) {
+    init(position: Position, direction: Vector, name: String? = nil, tickNumber: Int = 0, mass: Double = 7.34767309e22) {
         self.mass = mass
 
         super.init(position: position, direction: direction, name: name, tickNumber: tickNumber)

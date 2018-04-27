@@ -36,7 +36,7 @@ struct RandomSolarInitializer: UniverseInitializer {
         bodies.append(sun)
 
         // Put some bodies around it
-        for i in 1...numberOfBodies {
+        for _ in 1...numberOfBodies {
             let freeSpace = 0.5 * radius
 
             var position = Position(x: 0, y: 0)
@@ -48,7 +48,7 @@ struct RandomSolarInitializer: UniverseInitializer {
 
             let velocity = circularVelocity(for: position)
             let mass = smallestPlanetMass + ((largestPlanetMass - smallestPlanetMass) * drand48())
-            bodies.append(Planetoid(position: position, direction: velocity, name: "Body \(i)", tickNumber: 0, mass: mass))
+            bodies.append(Planetoid(position: position, direction: velocity, name: nil, tickNumber: 0, mass: mass))
         }
 
         return bodies
