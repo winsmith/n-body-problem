@@ -12,7 +12,6 @@ import SpriteKit
 class UniverseScene: SKScene {
     let universe = Universe(initializer: RandomSolarInitializer(numberOfBodies: 42))
     private var bodyShapes = [SKShapeNode]()
-    private var bodyLabels = [SKLabelNode]()
     private var lastUpdatedAt: TimeInterval?
 
     public var timeWarpFactor = 1e7
@@ -61,10 +60,12 @@ class UniverseScene: SKScene {
         }
 
         // Configure Label
-        let bodyLabel = SKLabelNode(text: body.name)
-        bodyLabel.fontColor = body.color
-        bodyLabels.append(bodyLabel)
-        addChild(bodyLabel)
+        if let name = body.name {
+            let bodyLabel = SKLabelNode(text: name)
+            bodyLabel.fontColor = body.color
+            bodyLabel.position = CGPoint(x: bodyShape!.position.x, y: bodyShape!.position.y - (30 + (bodyShape?.path?.boundingBox.height ?? 10) / 2))
+            bodyShape?.addChild(bodyLabel)
+        }
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -78,18 +79,12 @@ class UniverseScene: SKScene {
         for index in 0..<universe.bodies.count {
             let body = universe.bodies[index]
             let bodyShape = bodyShapes[index]
-            let bodyLabel = bodyLabels[index]
 
-            // Update Shape
+            // Update Position
             bodyShape.position = CGPoint(
                 x: body.position.x / zoomFactor,
                 y: body.position.y / zoomFactor
             )
-
-            // Update Label
-            bodyLabel.position = CGPoint(x: bodyShape.position.x, y: bodyShape.position.y - (30 + (bodyShape.path?.boundingBox.height ?? 10) / 2))
-            bodyLabel.text = body.name
-            bodyLabel.fontColor = drawLabels ? body.color : NSColor.clear
         }
     }
 
