@@ -16,7 +16,6 @@ class UniverseScene: SKScene {
 
     public var timeWarpFactor = 1e7
     public var drawTrails = true
-    public var drawLabels = true
     public var selectionAlgorithm: SelectionAlgorithm = BarnesHut()
 
     public var zoomFactor = 23e8
