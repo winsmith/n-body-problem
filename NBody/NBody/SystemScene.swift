@@ -9,16 +9,22 @@
 import Foundation
 import SpriteKit
 
-class UniverseScene: SKScene {
-    let universe = Universe(initializer: RandomSolarInitializer(numberOfBodies: 42))
+class SystemScene: SKScene {
+    let universe = System(initializer: RandomSolarInitializer(numberOfBodies: 200))
     private var bodyShapes = [SKShapeNode]()
     private var lastUpdatedAt: TimeInterval?
 
     public var timeWarpFactor = 1e7
-    public var drawTrails = true
+    public var drawTrails: DrawTrailsMode = .onlyNamedBodies
     public var selectionAlgorithm: SelectionAlgorithm = BarnesHut()
 
     public var zoomFactor = 23e8
+
+    enum DrawTrailsMode {
+        case noTrails
+        case onlyNamedBodies
+        case trailsGalore
+    }
 
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
@@ -35,6 +41,7 @@ class UniverseScene: SKScene {
             createNodes(for: body)
         }
     }
+    
 
     private func createNodes(for body: Body) {
         var bodyShape: SKShapeNode?
@@ -52,7 +59,8 @@ class UniverseScene: SKScene {
         addChild(bodyShape!)
 
         // Configure Trail
-        if let emitter = SKEmitterNode(fileNamed: "TrailParticle.sks"), drawTrails {
+        if let emitter = SKEmitterNode(fileNamed: "TrailParticle.sks"),
+            drawTrails == .trailsGalore || (drawTrails == .onlyNamedBodies && body.name != nil) {
             emitter.targetNode = self
             emitter.particleColor = body.color
             bodyShape?.addChild(emitter)
@@ -89,7 +97,7 @@ class UniverseScene: SKScene {
 
     fileprivate func updateUniverseStatus(_ currentTime: TimeInterval) {
         if let lastUpdatedAt = lastUpdatedAt {
-            let elapsedTime = currentTime - lastUpdatedAt
+            let elapsedTime = min(currentTime - lastUpdatedAt, 0.1)
             universe.update(elapsedTime: elapsedTime * timeWarpFactor)
         }
     }
@@ -100,7 +108,7 @@ class UniverseScene: SKScene {
         let zoomStep: CGFloat = 0.2
 
         if theEvent.characters == "," {
-            camera.setScale(max(camera.xScale - zoomStep, 0.1))
+            camera.setScale(max(camera.xScale - zoomStep, 0.05))
         }
 
         else if theEvent.characters == "." {

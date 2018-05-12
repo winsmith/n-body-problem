@@ -49,7 +49,8 @@ struct RandomSolarInitializer: UniverseInitializer {
 
             let velocity = circularVelocity(for: position)
             let mass = smallestPlanetMass + ((largestPlanetMass - smallestPlanetMass) * drand48())
-            bodies.append(Planetoid(position: position, direction: velocity, name: nil, tickNumber: 0, mass: mass))
+            let name = mass > largestPlanetMass * 0.75 ? " " : nil
+            bodies.append(Planetoid(position: position, direction: velocity, name: name, tickNumber: 0, mass: mass))
         }
 
         return bodies

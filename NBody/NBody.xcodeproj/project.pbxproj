@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC492D052081F77200E61CC5 /* UniverseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D042081F77200E61CC5 /* UniverseScene.swift */; };
-		DC492D08208222BC00E61CC5 /* Universe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D07208222BC00E61CC5 /* Universe.swift */; };
+		DC492D052081F77200E61CC5 /* SystemScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D042081F77200E61CC5 /* SystemScene.swift */; };
+		DC492D08208222BC00E61CC5 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D07208222BC00E61CC5 /* System.swift */; };
 		DC492D0A2082231900E61CC5 /* Body.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D092082231900E61CC5 /* Body.swift */; };
 		DC492D0C208223DE00E61CC5 /* Primitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D0B208223DE00E61CC5 /* Primitives.swift */; };
 		DC492D0E208246F400E61CC5 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC492D0D208246F400E61CC5 /* Helpers.swift */; };
@@ -20,12 +20,14 @@
 		DC5C4DE12081ED9D00ADC043 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5C4DE02081ED9D00ADC043 /* MainViewController.swift */; };
 		DC5C4DE32081ED9E00ADC043 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5C4DE22081ED9E00ADC043 /* Assets.xcassets */; };
 		DC5C4DE62081ED9E00ADC043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC5C4DE42081ED9E00ADC043 /* Main.storyboard */; };
+		DC6D2927209652CC008F94E6 /* SCNRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6D2926209652CC008F94E6 /* SCNRenderer.swift */; };
 		DC7AD466208E130A004066D3 /* TrailParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC7AD465208E130A004066D3 /* TrailParticle.sks */; };
 		DC7AD47D20909D64004066D3 /* SelectionAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD47C20909D64004066D3 /* SelectionAlgorithm.swift */; };
 		DC7AD47F20909E84004066D3 /* BruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD47E20909E84004066D3 /* BruteForce.swift */; };
 		DC7AD48120909EF8004066D3 /* BarnesHut.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD48020909EF8004066D3 /* BarnesHut.swift */; };
 		DC7AD4872090A161004066D3 /* Quadrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD4862090A161004066D3 /* Quadrant.swift */; };
 		DC7AD4892090A4FD004066D3 /* BHTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7AD4882090A4FD004066D3 /* BHTree.swift */; };
+		DCBE6941209F4C8F00AE72BF /* SystemRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBE6940209F4C8F00AE72BF /* SystemRenderer.swift */; };
 		DCDBCE2A20939CCA00F2F272 /* Initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDBCE2920939CCA00F2F272 /* Initializer.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,8 +37,8 @@
 		DC1359A9208C8E3600AAC0CE /* system_renderer.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = system_renderer.py; sourceTree = "<group>"; };
 		DC1359AA208C8E3600AAC0CE /* quadrant.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = quadrant.py; sourceTree = "<group>"; };
 		DC1359AB208C8E3600AAC0CE /* bhtree.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = bhtree.py; sourceTree = "<group>"; };
-		DC492D042081F77200E61CC5 /* UniverseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniverseScene.swift; sourceTree = "<group>"; };
-		DC492D07208222BC00E61CC5 /* Universe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Universe.swift; sourceTree = "<group>"; };
+		DC492D042081F77200E61CC5 /* SystemScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemScene.swift; sourceTree = "<group>"; };
+		DC492D07208222BC00E61CC5 /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		DC492D092082231900E61CC5 /* Body.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Body.swift; sourceTree = "<group>"; };
 		DC492D0B208223DE00E61CC5 /* Primitives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitives.swift; sourceTree = "<group>"; };
 		DC492D0D208246F400E61CC5 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -51,12 +53,14 @@
 		DC5C4DE52081ED9E00ADC043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC5C4DE72081ED9E00ADC043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC5C4DE82081ED9E00ADC043 /* NBody.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NBody.entitlements; sourceTree = "<group>"; };
+		DC6D2926209652CC008F94E6 /* SCNRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNRenderer.swift; sourceTree = "<group>"; };
 		DC7AD465208E130A004066D3 /* TrailParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TrailParticle.sks; sourceTree = "<group>"; };
 		DC7AD47C20909D64004066D3 /* SelectionAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionAlgorithm.swift; sourceTree = "<group>"; };
 		DC7AD47E20909E84004066D3 /* BruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForce.swift; sourceTree = "<group>"; };
 		DC7AD48020909EF8004066D3 /* BarnesHut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarnesHut.swift; sourceTree = "<group>"; };
 		DC7AD4862090A161004066D3 /* Quadrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quadrant.swift; sourceTree = "<group>"; };
 		DC7AD4882090A4FD004066D3 /* BHTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BHTree.swift; sourceTree = "<group>"; };
+		DCBE6940209F4C8F00AE72BF /* SystemRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemRenderer.swift; sourceTree = "<group>"; };
 		DCDBCE2920939CCA00F2F272 /* Initializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,7 +127,9 @@
 				DC5C4DE42081ED9E00ADC043 /* Main.storyboard */,
 				DC5C4DDE2081ED9D00ADC043 /* AppDelegate.swift */,
 				DC5C4DE02081ED9D00ADC043 /* MainViewController.swift */,
-				DC492D042081F77200E61CC5 /* UniverseScene.swift */,
+				DC492D042081F77200E61CC5 /* SystemScene.swift */,
+				DCBE6940209F4C8F00AE72BF /* SystemRenderer.swift */,
+				DC6D2926209652CC008F94E6 /* SCNRenderer.swift */,
 				DC5C4DE22081ED9E00ADC043 /* Assets.xcassets */,
 				DC5C4DE72081ED9E00ADC043 /* Info.plist */,
 				DC5C4DE82081ED9E00ADC043 /* NBody.entitlements */,
@@ -136,7 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				DC7AD47C20909D64004066D3 /* SelectionAlgorithm.swift */,
-				DC492D07208222BC00E61CC5 /* Universe.swift */,
+				DC492D07208222BC00E61CC5 /* System.swift */,
 				DC492D092082231900E61CC5 /* Body.swift */,
 				DC492D0B208223DE00E61CC5 /* Primitives.swift */,
 				DCDBCE2920939CCA00F2F272 /* Initializer.swift */,
@@ -238,6 +244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC7AD47D20909D64004066D3 /* SelectionAlgorithm.swift in Sources */,
+				DCBE6941209F4C8F00AE72BF /* SystemRenderer.swift in Sources */,
 				DC5C4DE12081ED9D00ADC043 /* MainViewController.swift in Sources */,
 				DC7AD47F20909E84004066D3 /* BruteForce.swift in Sources */,
 				DC492D0E208246F400E61CC5 /* Helpers.swift in Sources */,
@@ -245,11 +252,12 @@
 				DC7AD4892090A4FD004066D3 /* BHTree.swift in Sources */,
 				DCDBCE2A20939CCA00F2F272 /* Initializer.swift in Sources */,
 				DC492D0C208223DE00E61CC5 /* Primitives.swift in Sources */,
-				DC492D052081F77200E61CC5 /* UniverseScene.swift in Sources */,
-				DC492D08208222BC00E61CC5 /* Universe.swift in Sources */,
+				DC492D052081F77200E61CC5 /* SystemScene.swift in Sources */,
+				DC492D08208222BC00E61CC5 /* System.swift in Sources */,
 				DC5C4DDF2081ED9D00ADC043 /* AppDelegate.swift in Sources */,
 				DC7AD48120909EF8004066D3 /* BarnesHut.swift in Sources */,
 				DC492D0A2082231900E61CC5 /* Body.swift in Sources */,
+				DC6D2927209652CC008F94E6 /* SCNRenderer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

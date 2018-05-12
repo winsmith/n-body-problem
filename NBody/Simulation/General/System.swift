@@ -10,7 +10,7 @@ import AppKit
 import Foundation
 
 /// A container for simulation of orbital dynamics
-class Universe {
+class System {
     // MARK: Properties
     public private(set) var bodies = [Body]()
     public var selectionAlgorithm: SelectionAlgorithm?

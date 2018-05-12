@@ -17,9 +17,8 @@ class BarnesHut: SelectionAlgorithm {
         // If the body is inside the current quadrant, add it to the tree
         for body in bodies {
             guard let planetoid = body as? Planetoid else { continue }
-            if quadrant.contains(body.position) {
-                theTree.insert(insertedBody: planetoid)
-            }
+            guard quadrant.contains(body.position) else { continue }
+            theTree.insert(insertedBody: planetoid)
         }
 
         //  Now, use our methods in BHTree to update the forces,

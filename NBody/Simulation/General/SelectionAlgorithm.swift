@@ -11,3 +11,10 @@ import Foundation
 protocol SelectionAlgorithm {
     func update(bodies: [Body], elapsedTime: Double)
 }
+
+/// Empty Selection Algorithm for Performance Testing
+struct PlaceHolderSelectionAlgorithm: SelectionAlgorithm {
+    func update(bodies: [Body], elapsedTime: Double) {
+
+    }
+}

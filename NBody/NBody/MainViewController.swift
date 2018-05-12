@@ -18,9 +18,9 @@ class MainViewController: NSViewController {
         super.viewDidLoad()
 
         let skView = view as! SKView
-        let scene = UniverseScene(size: view.bounds.size)
-        skView.showsFPS = true
-        skView.showsNodeCount = true
+        let scene = SystemScene(size: view.bounds.size)
+        skView.showsFPS = false
+        skView.showsNodeCount = false
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
